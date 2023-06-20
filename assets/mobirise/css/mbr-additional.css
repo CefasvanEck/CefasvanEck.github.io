@@ -1199,7 +1199,7 @@ section.lazy-placeholder:after {
 .cid-tHEFKHuesK {
   padding-top: 90px;
   padding-bottom: 90px;
-  background-color: #efefef;
+  background-color: #dcdcdc;
 }
 .cid-tHEFKHuesK P {
   color: #767676;
@@ -1225,6 +1225,9 @@ section.lazy-placeholder:after {
 }
 .cid-tG8jTUBZCN H3 {
   color: #65be19;
+}
+.cid-tG8jTUBZCN DIV {
+  text-align: center;
 }
 .cid-tHIbNYib4E {
   padding-top: 30px;
