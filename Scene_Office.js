@@ -12,7 +12,7 @@ class Scene_Office extends Scene
     {
         super(minTimeWhenShown, maxTimeWhenShown, background_img);
 
-        this.button = createButton("Ik heb van jullie de milieubox ontvang maar wanneer komen jullie het vieze ophalen?");
+        this.button = createButton("Ik heb van jullie de milieubox ontvangen maar wanneer komen jullie het vieze ophalen?");
         this.button.mousePressed(this.onButtonClick.bind(this));
         this.button.hide();
         this.blockTimerUntil = 0;
@@ -37,7 +37,7 @@ class Scene_Office extends Scene
             strokeWeight(2);
             text('Met DRS, waar kan ik u mee helpen?', Main.widthSize * 0.0055, Main.heightSize * 0.5);
 
-            text('De vragen:', Main.widthSize * 0.4, Main.heightSize * 0.4);
+            text('Klik op uw vraag:', Main.widthSize * 0.4, Main.heightSize * 0.4);
             this.button.show();
             return 2;
         }
