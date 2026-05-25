@@ -12,7 +12,6 @@ let song;
 let intro_Phone;
 
 
-
 /** Shared global values **/
 const Main = 
 {
@@ -41,13 +40,13 @@ function setup()
 	});
 	//End
 	//Song: the_mountain-dental-clinic-151199
-	song = loadSound('audio/dental_clinic.mp3');
-	intro_Phone = loadSound('audio/Opnemen_Telefoon.mp3');
-	Main.pickup_DPD = loadSound('audio/Ophalen.mp3');
+	song = loadSound('dental_clinic.mp3');
+	intro_Phone = loadSound('Opnemen_Telefoon.mp3');
+	Main.pickup_DPD = loadSound('Ophalen.mp3');
 	//End
 
 	//Setting up Scenes
-	scenes.push(new Scene_Intro(0, 200,"backgrounds/black"));
+	scenes.push(new Scene_Intro(0, 200,"black"));
 	scenes[(scenes.length - 1)].addText('Er wordt bijgehouden hoe lang u naar dit filmpje kijkt en waar u op klikt.',[0.3,0.25]);
 	scenes[(scenes.length - 1)].addText('Dit wordt gebruikt om dit filmpje te verbeteren...',[0.35,0.3]);
 	//scenes[(scenes.length - 1)].addText('Klik op het scherm om te starten en te accepteren',[0.4,0.55]);
@@ -56,42 +55,42 @@ function setup()
 	this.button = createButton("Klik hier om de voorwaarden te accepteren en het filmpje te starten");
     this.button.mousePressed(onButtonClick);
 	//
-	scenes.push(new Scene_Office(200, 350,"backgrounds/DRS_background"));
-	scenes[(scenes.length - 1)].addObject("items/phone",[0.8, 0.63],0.35);
-	scenes[(scenes.length - 1)].addObject("items/phone",[0.95, 0.81],0.365);
+	scenes.push(new Scene_Office(200, 350,"DRS_background"));
+	scenes[(scenes.length - 1)].addObject("phone",[0.8, 0.63],0.35);
+	scenes[(scenes.length - 1)].addObject("phone",[0.95, 0.81],0.365);
 
-	scenes[(scenes.length - 1)].addObject_Timer("items/Ringing_Screen",[0.8, 0.63],0.35,[235,245]);
-	scenes[(scenes.length - 1)].addObject_Timer("items/text_popup",[0.71, 0.585],0.25,[235,245]);
+	scenes[(scenes.length - 1)].addObject_Timer("Ringing_Screen",[0.8, 0.63],0.35,[235,245]);
+	scenes[(scenes.length - 1)].addObject_Timer("text_popup",[0.71, 0.585],0.25,[235,245]);
 	
-	scenes[(scenes.length - 1)].addObject_Timer("items/Ringing_Screen",[0.8, 0.63],0.35,[260,270]);
-	scenes[(scenes.length - 1)].addObject_Timer("items/text_popup",[0.78, 0.5],0.25,[260,270]);
+	scenes[(scenes.length - 1)].addObject_Timer("Ringing_Screen",[0.8, 0.63],0.35,[260,270]);
+	scenes[(scenes.length - 1)].addObject_Timer("text_popup",[0.78, 0.5],0.25,[260,270]);
 	
-	scenes[(scenes.length - 1)].addObject_Timer("items/Ringing_Screen",[0.8, 0.63],0.35,[285,295]);
-	scenes[(scenes.length - 1)].addObject_Timer("items/text_popup",[0.87, 0.56],0.25,[285,295]);
+	scenes[(scenes.length - 1)].addObject_Timer("Ringing_Screen",[0.8, 0.63],0.35,[285,295]);
+	scenes[(scenes.length - 1)].addObject_Timer("text_popup",[0.87, 0.56],0.25,[285,295]);
 	
-	scenes[(scenes.length - 1)].addObject_Timer("items/Picking_Up_Phone",[0.8, 0.63],0.35,[315,350]);
+	scenes[(scenes.length - 1)].addObject_Timer("Picking_Up_Phone",[0.8, 0.63],0.35,[315,350]);
 	scenes[(scenes.length - 1)].fadeInStrenght = 6;
 
 	
 	//
-	scenes.push(new Scene(350, 450,"backgrounds/black"));
+	scenes.push(new Scene(350, 450,"black"));
 	scenes[(scenes.length - 1)].addText('Een aantal dagen eerder....',[0.35,0.5]);
 	scenes[(scenes.length - 1)].fadeInStrenght = 8;
 	
 
-	scenes.push(new Scene(450, 650,"backgrounds/Loading_Boxes"));
-	scenes[(scenes.length - 1)].addObject_Timer("items/loading_boxes_dpd.",[0.5,0.505],1,[450, 550]);
+	scenes.push(new Scene(450, 650,"Loading_Boxes"));
+	scenes[(scenes.length - 1)].addObject_Timer("loading_boxes_dpd.",[0.5,0.505],1,[450, 550]);
 
 
-	scenes.push(new Scene(550, 750,"backgrounds/dentistBuilding_background"));
-	scenes[(scenes.length - 1)].addObject_Timer("items/dpd_dentist_deliver.",[0.5,0.5],1,[550,630]);
-	scenes[(scenes.length - 1)].addObject_Timer("items/dentist_peaking.",[0.5,0.5],1,[630,750]);
+	scenes.push(new Scene(550, 750,"dentistBuilding_background"));
+	scenes[(scenes.length - 1)].addObject_Timer("dpd_dentist_deliver.",[0.5,0.5],1,[550,630]);
+	scenes[(scenes.length - 1)].addObject_Timer("dentist_peaking.",[0.5,0.5],1,[630,750]);
 	
 
-	scenes.push(new Scene(750, 900,"backgrounds/DRS_Office_Table"));
-	scenes[(scenes.length - 1)].addObject_Timer("items/Contract_End_Scene.",[0.5, 0.5],1.0,[750, 900]);
+	scenes.push(new Scene(750, 900,"DRS_Office_Table"));
+	scenes[(scenes.length - 1)].addObject_Timer("Contract_End_Scene.",[0.5, 0.5],1.0,[750, 900]);
 
-	scenes.push(new Scene_Intro(900, 1000,"backgrounds/black"));
+	scenes.push(new Scene_Intro(900, 1000,"black"));
 	scenes[(scenes.length - 1)].addText('Einde van de video',[0.4,0.55]);
 	scenes[(scenes.length - 1)].addText('is Uw vraag beantwoord?',[0.4,0.6]);
 	this.buttonEnd = createButton("Ja");
@@ -158,8 +157,8 @@ function mousePressed()
 {
 	if (playTimer > 300 && intro_Phone.isLoaded() && !intro_Phone.isPlaying()) 
 	{
-    	intro_Phone.play();
-		intro_Phone.setVolume(3.0);
+    	//intro_Phone.play();
+		//intro_Phone.setVolume(3.0);
   	}
 	++registeredMouseClicks;
 }
