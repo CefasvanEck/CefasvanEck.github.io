@@ -23,8 +23,8 @@ const Main =
 
 function setup() 
 {
-	Main.widthSize = windowWidth;
-	Main.heightSize = windowHeight;
+	Main.widthSize = 1024;
+	Main.heightSize = 682;
 	createCanvas(Main.widthSize, Main.heightSize);
 	frameRate(20);
 	//Set base values
