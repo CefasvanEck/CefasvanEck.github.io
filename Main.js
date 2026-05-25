@@ -103,6 +103,13 @@ function setup()
     {
         windowResized();
     }, 100);
+	window.addEventListener("load", () =>
+	{
+		setTimeout(() =>
+		{
+			windowResized();
+		}, 100);
+	});
 }
 
 //Window Logic
