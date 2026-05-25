@@ -56,8 +56,8 @@ function setup()
     this.button.mousePressed(onButtonClick);
 	//
 	scenes.push(new Scene_Office(200, 350,"DRS_background"));
-	scenes[(scenes.length - 1)].addObject("phone",[0.8, 0.63],0.35);
-	scenes[(scenes.length - 1)].addObject("phone",[0.95, 0.81],0.365);
+	scenes[(scenes.length - 1)].addObject("Phone",[0.8, 0.63],0.35);
+	scenes[(scenes.length - 1)].addObject("Phone",[0.95, 0.81],0.365);
 
 	scenes[(scenes.length - 1)].addObject_Timer("Ringing_Screen",[0.8, 0.63],0.35,[235,245]);
 	scenes[(scenes.length - 1)].addObject_Timer("text_popup",[0.71, 0.585],0.25,[235,245]);
