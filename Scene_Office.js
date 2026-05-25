@@ -37,7 +37,7 @@ class Scene_Office extends Scene
             strokeWeight(2);
             text('Met DRS, waar kan ik u mee helpen?', Main.widthSize * 0.0055, Main.heightSize * 0.5);
 
-            text('Klik op uw vraag:', Main.widthSize * 0.4, Main.heightSize * 0.4);
+            text('Klik op de vraag die u heeft:', Main.widthSize * 0.4, Main.heightSize * 0.4);
             this.button.show();
             return 2;
         }
