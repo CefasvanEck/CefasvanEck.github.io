@@ -102,9 +102,17 @@ function setup()
 //Window Logic
 function windowResized() 
 {
-	resizeCanvas(widthSize, heightSize);
+    updateWindowSize();
+    resizeCanvas(Main.widthSize, Main.heightSize);
+}
+
+function updateWindowSize()
+{
+    Main.widthSize = windowWidth;
+    Main.heightSize = windowHeight;
 }
 //End
+
 
 //Button Logic
 function anchorDOM(el, x, y) 
