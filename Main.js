@@ -97,6 +97,12 @@ function setup()
     this.buttonEnd.mousePressed(yesButtonClick);
 	this.buttonEnd.hide();
 	this.blockTimer = false;
+
+	// Force correct resize after browser finished layout
+    setTimeout(() => 
+    {
+        windowResized();
+    }, 100);
 }
 
 //Window Logic
@@ -104,6 +110,7 @@ function windowResized()
 {
     updateWindowSize();
     resizeCanvas(Main.widthSize, Main.heightSize);
+	redraw();
 }
 
 function updateWindowSize()
