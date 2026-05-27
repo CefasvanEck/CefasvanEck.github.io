@@ -50,7 +50,7 @@ function setup()
 	scenes[(scenes.length - 1)].addText('Er wordt bijgehouden hoe lang u naar dit filmpje kijkt en waar u op klikt.',[0.3,0.25]);
 	scenes[(scenes.length - 1)].addText('Dit wordt gebruikt om dit filmpje te verbeteren...',[0.35,0.3]);
 	//scenes[(scenes.length - 1)].addText('Klik op het scherm om te starten en te accepteren',[0.4,0.55]);
-	scenes[(scenes.length - 1)].addText('Dit filmpje is bedoeld om mogelijk uw vraag te beantwoorden.',[0.33,0.15]);
+	scenes[(scenes.length - 1)].addText('Dit filmpje is bedoeld om uw vraag te beantwoorden over het leveren en ophalen van de milieubox.',[0.17,0.15]);
 
 	this.button = createButton("Klik hier om de voorwaarden te accepteren en het filmpje te starten");
     this.button.mousePressed(onButtonClick);
