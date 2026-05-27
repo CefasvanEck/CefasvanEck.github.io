@@ -74,7 +74,7 @@ function setup()
 	
 	//
 	scenes.push(new Scene(350, 450,"black"));
-	scenes[(scenes.length - 1)].addText('Een aantal dagen eerder....',[0.35,0.5]);
+	scenes[(scenes.length - 1)].addText('Een aantal dagen eerder....',[0.375,0.5]);
 	scenes[(scenes.length - 1)].fadeInStrenght = 8;
 	
 
