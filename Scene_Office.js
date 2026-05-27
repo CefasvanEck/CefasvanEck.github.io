@@ -49,5 +49,6 @@ class Scene_Office extends Scene
         this.blockTimerUntil = 1;
         console.log("klik werkt");
         Main.pickup_DPD.play();
+        sendMail('Watched video until Question in Office Scene with ID: ' + Main.watcherID + ' Question Clicked: ');
     }
 }

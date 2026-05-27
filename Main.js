@@ -1,5 +1,4 @@
 /** Values for sending me testing Data **/
-var watcherID;
 var timerBeforeClicked;
 var registeredMouseClicks;
 var registeredScrolling;
@@ -18,7 +17,8 @@ const Main =
 	//Window Size
 	widthSize: 0,
 	heightSize: 0,
-	pickup_DPD: null
+	pickup_DPD: null,
+	watcherID: 0
 };
 
 function setup() 
@@ -28,7 +28,7 @@ function setup()
 	createCanvas(Main.widthSize, Main.heightSize);
 	frameRate(20);
 	//Set base values
-	watcherID = Math.floor(Math.random() * 9999);
+	Main.watcherID = Math.floor(Math.random() * 9999);
 	playTimer = 0;
 	timerBeforeClicked = 0;
 	registeredMouseClicks = 0;
@@ -141,7 +141,7 @@ function onButtonClick()
     	song.play();
 		song.setVolume(0.1);
 		//Send the first email
-		sendMail('Someone started watching the video with ID: ' + watcherID + ' ; Timer before User Clicked video: ' + timerBeforeClicked + ' ; Scrolling: ' + registeredScrolling);
+		sendMail('Someone started watching the video with ID: ' + Main.watcherID + ' ; Timer before User Clicked video: ' + timerBeforeClicked + ' ; Scrolling: ' + registeredScrolling);
 		timerBeforeClicked = 0;
 		registeredScrolling = 0;
   	}
@@ -151,7 +151,7 @@ function onButtonClick()
 
 function yesButtonClick()
 {
-	sendMail('User with ID: ' + watcherID + ' clicked Yes for question being answered.');
+	sendMail('User with ID: ' + Main.watcherID + ' clicked Yes for question being answered.');
 	console.log("klik werkt");
 }
 //End
@@ -169,7 +169,7 @@ function onUpdate(spawnEachFrame)
 
 	if(playTimer == 890)
 	{
-		sendMail('Watched whole video with ID: ' + watcherID + ' ; Left Mouse Clicks Amount: ' + registeredMouseClicks);
+		sendMail('Watched whole video with ID: ' + Main.watcherID + ' ; Left Mouse Clicks Amount: ' + registeredMouseClicks);
 		this.buttonEnd.show();
 	}
 }
