@@ -82,15 +82,15 @@ function setup()
 	scenes[(scenes.length - 1)].addObject_Timer("loading_boxes_dpd.",[0.5,0.505],1,[450, 550]);
 
 
-	scenes.push(new Scene(550, 750,"dentistBuilding_background"));
+	scenes.push(new Scene(550, 800,"dentistBuilding_background"));
 	scenes[(scenes.length - 1)].addObject_Timer("dpd_dentist_deliver.",[0.5,0.5],1,[550,630]);
-	scenes[(scenes.length - 1)].addObject_Timer("dentist_peaking.",[0.5,0.5],1,[630,750]);
+	scenes[(scenes.length - 1)].addObject_Timer("dentist_peaking.",[0.5,0.5],1,[630,800]);
 	
 
-	scenes.push(new Scene(750, 900,"DRS_Office_Table"));
-	scenes[(scenes.length - 1)].addObject_Timer("Contract_End_Scene.",[0.5, 0.5],1.0,[750, 900]);
+	scenes.push(new Scene(800, 950,"DRS_Office_Table"));
+	scenes[(scenes.length - 1)].addObject_Timer("Contract_End_Scene.",[0.5, 0.5],1.0,[800, 950]);
 
-	scenes.push(new Scene_Intro(900, 1000,"black"));
+	scenes.push(new Scene_Intro(950, 1100,"black"));
 	scenes[(scenes.length - 1)].addText('Einde van de video',[0.4,0.55]);
 	scenes[(scenes.length - 1)].addText('is Uw vraag beantwoord?',[0.4,0.6]);
 	this.buttonEnd = createButton("Ja");
