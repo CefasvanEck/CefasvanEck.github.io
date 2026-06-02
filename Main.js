@@ -98,7 +98,8 @@ function setup()
 	//Scene 4: Quick Delivery at the Dentist Clinic
 	scenes.push(new Scene(550, 800,"dentistBuilding_background"));
 	scenes[(scenes.length - 1)].addObject_Timer("dpd_dentist_deliver.",[0.5,0.5],1,[550,630]);
-	scenes[(scenes.length - 1)].addObject_Timer("dentist_peaking.",[0.5,0.5],1,[630,795]);
+	scenes[(scenes.length - 1)].addObject_Timer("dentist_peaking.",[0.5,0.5],1,[620,790]);
+	scenes[(scenes.length - 1)].endsWithBlackScreen = 1;
 	
 	//Scene 5: the contract and conclusion
 	scenes.push(new Scene(800, 950,"DRS_Office_Table"));

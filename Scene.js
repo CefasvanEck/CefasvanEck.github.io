@@ -15,6 +15,7 @@ class Scene
 
     isForeground;
     fadeInStrenght = 0;
+    endsWithBlackScreen;
 
 
     constructor(minTimeWhenShown, maxTimeWhenShown, background_img) 
@@ -86,6 +87,13 @@ class Scene
     {
         push();
         imageMode(CENTER);
+
+        if(endsWithBlackScreen == 1 && currentTime >= this.img_ShowBetweenTime[i][1] - 20)
+        {
+            fill(0);
+            noStroke();
+            rect(0, 0, Main.widthSize, Main.heightSize);
+        }
 
 
         if((this.fadeInStrenght > 0 && currentTime > this.timeWhenRenderThis) || this.fadeInStrenght == 0)
