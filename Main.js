@@ -57,6 +57,7 @@ function setup()
 	//End
 
 	//Setting up Scenes
+	//Scene 1: Prototype Introduction
 	scenes.push(new Scene_Intro(0, 200,"black"));
 	scenes[(scenes.length - 1)].addText('Er wordt bijgehouden hoe lang u naar dit filmpje kijkt en waar u op klikt op het scherm.',[0.3,0.25]);
 	scenes[(scenes.length - 1)].addText('Dit wordt gebruikt om dit filmpje te verbeteren en uw vragen beter te beantwoorden...',[0.35,0.3]);
@@ -68,7 +69,8 @@ function setup()
 
 	button_voorwaarden = createButton("Klik hier om de uitgebreide voorwaarden te lezen.");
     button_voorwaarden.mousePressed(onButtonClickVoorwaarden);
-	//
+
+	//Scene 2: Office, select Question
 	scenes.push(new Scene_Office(200, 350,"DRS_background"));
 	scenes[(scenes.length - 1)].addObject("phone",[0.8, 0.63],0.35);
 	scenes[(scenes.length - 1)].addObject("phone",[0.95, 0.81],0.365);
@@ -86,24 +88,24 @@ function setup()
 	scenes[(scenes.length - 1)].fadeInStrenght = 6;
 
 	
-	//
+	//Scene 3: Loading Clean, empty Climate Boxes at DRS Company
 	scenes.push(new Scene(350, 450,"black"));
 	scenes[(scenes.length - 1)].addText('Een aantal dagen eerder....',[0.375,0.5]);
 	scenes[(scenes.length - 1)].fadeInStrenght = 8;
-	
-
 	scenes.push(new Scene(450, 650,"Loading_Boxes"));
 	scenes[(scenes.length - 1)].addObject_Timer("loading_boxes_dpd.",[0.5,0.505],1,[450, 550]);
 
-
+	//Scene 4: Quick Delivery at the Dentist Clinic
 	scenes.push(new Scene(550, 800,"dentistBuilding_background"));
 	scenes[(scenes.length - 1)].addObject_Timer("dpd_dentist_deliver.",[0.5,0.5],1,[550,630]);
-	scenes[(scenes.length - 1)].addObject_Timer("dentist_peaking.",[0.5,0.5],1,[630,800]);
+	scenes[(scenes.length - 1)].addObject_Timer("dentist_peaking.",[0.5,0.5],1,[630,795]);
 	
-
+	//Scene 5: the contract and conclusion
 	scenes.push(new Scene(800, 950,"DRS_Office_Table"));
 	scenes[(scenes.length - 1)].addObject_Timer("Contract_End_Scene.",[0.5, 0.5],1.0,[800, 950]);
+	scenes[(scenes.length - 1)].fadeInStrenght = 6;
 
+	//Scene 6: the end Testing Prototype
 	scenes.push(new Scene_Intro(950, 1100,"black"));
 	scenes[(scenes.length - 1)].addText('Einde van de video',[0.4,0.55]);
 	scenes[(scenes.length - 1)].addText('is Uw vraag beantwoord?',[0.4,0.6]);
@@ -202,7 +204,7 @@ function onUpdate(spawnEachFrame)
 		}
 	}
 
-	if(playTimer == 890)
+	if(playTimer == 950)
 	{
 		sendMail('Watched whole video with ID: ' + Main.watcherID + ' ; Left Mouse Clicks Amount: ' + registeredMouseClicks);
 		buttonEnd.show();
@@ -267,7 +269,7 @@ function draw()
 
 			anchorDOM(button, 0.45,0.55);
 			anchorDOM(button_voorwaarden, 0.48,0.62);
-			anchorDOM(buttonEnd, 0.45,0.55);
+			anchorDOM(buttonEnd, 0.45,0.65);
 		}
 	}
 	else
