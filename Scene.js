@@ -35,8 +35,6 @@ class Scene
 
     addObject(object_img,objectPosition,object_scale)
     {
-        //this.img_object[this.img_object.length - 1] = object_img;
-        //Javascript version
         if(object_img.includes("."))
         {
             let vid = createVideo(object_img + "mp4");
@@ -119,10 +117,6 @@ class Scene
                     Main.widthSize * this.img_scale[i],
                     Main.heightSize * this.img_scale[i]
                     ); 
-
-                        //console.log(this.img_object[i].elt.videoWidth);
-                        //console.log(this.img_object[i].elt.videoHeight);
-                        //console.log(this.img_object[i].elt.readyState);
                 }
                 else
                 {
@@ -147,26 +141,4 @@ class Scene
 
         return 1;
     }  
-
-    greenScreenCut()
-    {
-        //blendMode(DARKEST);
-        //this.greenScreenCut();
-        //blendMode(BLEND);
-        loadPixels();
-
-        for (let i = 0; i < pixels.length; i += 4)
-        {
-            let r = pixels[i];
-            let g = pixels[i + 1];
-            let b = pixels[i + 2];
-
-            if (g > 245 && r < 15 && b < 15)
-            {
-                pixels[i + 3] = 0;
-            }
-        }
-
-        updatePixels();
-    }
 }

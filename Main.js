@@ -10,6 +10,13 @@ var blockTimer;
 let song;
 let intro_Phone;
 
+let voorwaarden = [];
+let scrollY = 0;
+var showVoorwaarden;
+
+let button;
+let button_voorwaarden;
+let buttonEnd;
 
 /** Shared global values **/
 const Main = 
@@ -27,12 +34,16 @@ function setup()
 	Main.heightSize = 682;
 	createCanvas(Main.widthSize, Main.heightSize);
 	frameRate(20);
+
+	voorwaarden = loadStrings('Voorwaarden.txt');
 	//Set base values
 	Main.watcherID = Math.floor(Math.random() * 9999);
 	playTimer = 0;
 	timerBeforeClicked = 0;
 	registeredMouseClicks = 0;
 	registeredScrolling = 0;
+
+	showVoorwaarden = 0;
 	//Register if the user is scrolling
 	window.addEventListener("scroll", () =>
 	{
@@ -47,13 +58,16 @@ function setup()
 
 	//Setting up Scenes
 	scenes.push(new Scene_Intro(0, 200,"black"));
-	scenes[(scenes.length - 1)].addText('Er wordt bijgehouden hoe lang u naar dit filmpje kijkt en waar u op klikt.',[0.3,0.25]);
-	scenes[(scenes.length - 1)].addText('Dit wordt gebruikt om dit filmpje te verbeteren...',[0.35,0.3]);
-	//scenes[(scenes.length - 1)].addText('Klik op het scherm om te starten en te accepteren',[0.4,0.55]);
+	scenes[(scenes.length - 1)].addText('Er wordt bijgehouden hoe lang u naar dit filmpje kijkt en waar u op klikt op het scherm.',[0.3,0.25]);
+	scenes[(scenes.length - 1)].addText('Dit wordt gebruikt om dit filmpje te verbeteren en uw vragen beter te beantwoorden...',[0.35,0.3]);
+
 	scenes[(scenes.length - 1)].addText('Dit filmpje is bedoeld om uw vraag te beantwoorden over het leveren en ophalen van de milieubox.',[0.17,0.15]);
 
-	this.button = createButton("Klik hier om de voorwaarden te accepteren en het filmpje te starten");
-    this.button.mousePressed(onButtonClick);
+	button = createButton("Klik hier om de voorwaarden te accepteren en het filmpje te starten");
+    button.mousePressed(onButtonClick);
+
+	button_voorwaarden = createButton("Klik hier om de uitgebreide voorwaarden te lezen.");
+    button_voorwaarden.mousePressed(onButtonClickVoorwaarden);
 	//
 	scenes.push(new Scene_Office(200, 350,"DRS_background"));
 	scenes[(scenes.length - 1)].addObject("phone",[0.8, 0.63],0.35);
@@ -93,10 +107,10 @@ function setup()
 	scenes.push(new Scene_Intro(950, 1100,"black"));
 	scenes[(scenes.length - 1)].addText('Einde van de video',[0.4,0.55]);
 	scenes[(scenes.length - 1)].addText('is Uw vraag beantwoord?',[0.4,0.6]);
-	this.buttonEnd = createButton("Ja");
-    this.buttonEnd.mousePressed(yesButtonClick);
-	this.buttonEnd.hide();
-	this.blockTimer = false;
+	buttonEnd = createButton("Ja");
+    buttonEnd.mousePressed(yesButtonClick);
+	buttonEnd.hide();
+	blockTimer = false;
 
 	// Force correct resize after browser finished layout
     setTimeout(() => 
@@ -145,7 +159,28 @@ function onButtonClick()
 		timerBeforeClicked = 0;
 		registeredScrolling = 0;
   	}
+	button_voorwaarden.hide();
 	button.hide();
+	console.log("klik werkt");
+}
+
+function onButtonClickVoorwaarden()
+{
+	if(showVoorwaarden == 0)
+	{
+		showVoorwaarden = 1;
+		button_voorwaarden.hide();
+		button.hide();
+	}
+	else
+	{
+		playTimer = 0;
+		this.blockTimer = true;
+		showVoorwaarden = 0;
+		button_voorwaarden.show();
+		button.show();
+		button_voorwaarden.html("Klik hier om de uitgebreide voorwaarden te lezen.");
+	}
 	console.log("klik werkt");
 }
 
@@ -170,7 +205,7 @@ function onUpdate(spawnEachFrame)
 	if(playTimer == 890)
 	{
 		sendMail('Watched whole video with ID: ' + Main.watcherID + ' ; Left Mouse Clicks Amount: ' + registeredMouseClicks);
-		this.buttonEnd.show();
+		buttonEnd.show();
 	}
 }
 
@@ -185,6 +220,14 @@ function mousePressed()
 	++registeredMouseClicks;
 }
 
+// Scrolling
+function mouseWheel(event) 
+{
+    scrollY += event.delta;
+    scrollY = Math.max(0, scrollY);
+    return true;
+}
+
 function draw() 
 {
 	//Register user being on the page without doing anything recarding the video
@@ -193,48 +236,71 @@ function draw()
 		++timerBeforeClicked;
 	}
 	//End
-
 	background(0);
 	onUpdate(10);
 
-	for (var i = 0; i < scenes.length; ++i) 
+	if(showVoorwaarden == 0)
 	{
-		if(playTimer > scenes[i].timeWhenRenderThis || scenes[i].fadeInStrenght == 0)
-        {
-			var returnValue = scenes[i].renderScreen(playTimer);
-			if(returnValue == 2)
+		for (var i = 0; i < scenes.length; ++i) 
+		{
+			if(playTimer > scenes[i].timeWhenRenderThis || scenes[i].fadeInStrenght == 0)
 			{
-				this.blockTimer = true;
-			}
-			else if(returnValue == 1)
-			{
-				this.blockTimer = false;
+				var returnValue = scenes[i].renderScreen(playTimer);
+				if(returnValue == 2)
+				{
+					this.blockTimer = true;
+				}
+				else if(returnValue == 1)
+				{
+					this.blockTimer = false;
+				}
+
+				if(scenes[i].fadeInStrenght != 0)
+				{
+					//Fade-in from black screen to the view of the office. Used tint in older versions, which lowers performance(fps) because tint isn't an overlay but a alpha calculation for each frame
+					let fadeAlpha = constrain(((playTimer - scenes[i].timeWhenRenderThis))  * scenes[i].fadeInStrenght,0,255)
+					noStroke();
+					fill(0, 0, 0, 255 - fadeAlpha);
+					rect(0, 0, Main.widthSize, Main.heightSize);
+				}
 			}
 
-			if(scenes[i].fadeInStrenght != 0)
-       	 	{
-				//Fade-in from black screen to the view of the office. Used tint in older versions, which lowers performance(fps) because tint isn't an overlay but a alpha calculation for each frame
-				let fadeAlpha = constrain(((playTimer - scenes[i].timeWhenRenderThis))  * scenes[i].fadeInStrenght,0,255)
-				noStroke();
-				fill(0, 0, 0, 255 - fadeAlpha);
-				rect(0, 0, Main.widthSize, Main.heightSize);
-			}
-        }
-
-		anchorDOM(this.button, 0.45,0.55);
+			anchorDOM(button, 0.45,0.55);
+			anchorDOM(button_voorwaarden, 0.48,0.62);
+			anchorDOM(buttonEnd, 0.45,0.55);
+		}
 	}
+	else
+	{
+		fill(255);
+		textSize(13);
+		let x = 0.1;
+		let startY = 0.0;
+		let regelHoogte = 16;
 
-	//textSize(100);
-	//noFill();
-	//stroke(255);
-	//strokeWeight(2);
-	
-	
-	//push();
-	//resetMatrix();
-	//fill(255);
-	//textSize(20);
-	//text('Timer: ' + playTimer, width / 35, height / 15);
-	//text('' + width + ' : ' + height, width / 35, height / 30);
-	//pop();
+		for (let i = 0; i < voorwaarden.length; i++) 
+		{
+			let maxScroll = Math.max(0, voorwaarden.length * regelHoogte - Main.heightSize);
+			scrollY = constrain(scrollY, 0, maxScroll);
+
+			let y = Main.heightSize *  startY + i * regelHoogte - scrollY;
+
+			// Alleen renderen als zichtbaar
+			if (y > -regelHoogte && y < Main.heightSize + regelHoogte) 
+			{
+				text(voorwaarden[i], Main.widthSize * x,y);
+
+				if (button_voorwaarden.elt.style.display === "none")
+				{
+					button_voorwaarden.html("Klik hier om terug te gaan naar het filmpje");
+					anchorDOM(button_voorwaarden, 0.48,0.875);
+					button_voorwaarden.show();
+				}
+			}
+			else if (button_voorwaarden.elt.style.display !== "none")
+			{
+				button_voorwaarden.hide();
+			}
+		}
+	}	
 }
