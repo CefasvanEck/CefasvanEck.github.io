@@ -34,6 +34,11 @@ class Scene
         this.img_background = loadImage(background_img + ".png");
     }
 
+    setEndsWithBlackScreen()
+    {
+        this.endsWithBlackScreen = 1;
+    }
+
     addObject(object_img,objectPosition,object_scale)
     {
         if(object_img.includes("."))
@@ -88,14 +93,6 @@ class Scene
         push();
         imageMode(CENTER);
 
-        if(endsWithBlackScreen == 1 && currentTime >= this.img_ShowBetweenTime[i][1] - 20)
-        {
-            fill(0);
-            noStroke();
-            rect(0, 0, Main.widthSize, Main.heightSize);
-        }
-
-
         if((this.fadeInStrenght > 0 && currentTime > this.timeWhenRenderThis) || this.fadeInStrenght == 0)
         {
             // Draw the background
@@ -144,6 +141,13 @@ class Scene
         if(this.isForeground)
         {
             image(this.img_background, Main.widthSize / 2, Main.heightSize / 2, Main.widthSize, Main.heightSize);
+        }
+
+        if(this.endsWithBlackScreen == 1 && currentTime >= this.maxTimeWhenRenderThis - 20 && currentTime <= this.maxTimeWhenRenderThis - 1)
+        {
+            fill(0);
+            noStroke();
+            rect(0, 0, Main.widthSize, Main.heightSize);
         }
         pop();
 

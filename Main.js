@@ -99,7 +99,7 @@ function setup()
 	scenes.push(new Scene(550, 800,"dentistBuilding_background"));
 	scenes[(scenes.length - 1)].addObject_Timer("dpd_dentist_deliver.",[0.5,0.5],1,[550,630]);
 	scenes[(scenes.length - 1)].addObject_Timer("dentist_peaking.",[0.5,0.5],1,[620,790]);
-	scenes[(scenes.length - 1)].endsWithBlackScreen = 1;
+	scenes[(scenes.length - 1)].setEndsWithBlackScreen();
 	
 	//Scene 5: the contract and conclusion
 	scenes.push(new Scene(800, 950,"DRS_Office_Table"));
@@ -205,6 +205,12 @@ function onUpdate(spawnEachFrame)
 		}
 	}
 
+	if (playTimer == 300 && intro_Phone.isLoaded() && !intro_Phone.isPlaying()) 
+	{
+    	intro_Phone.play();
+		intro_Phone.setVolume(1.0);
+  	}
+
 	if(playTimer == 950)
 	{
 		sendMail('Watched whole video with ID: ' + Main.watcherID + ' ; Left Mouse Clicks Amount: ' + registeredMouseClicks);
@@ -215,11 +221,6 @@ function onUpdate(spawnEachFrame)
 //Browser ban the auto-plaing of sound and music if the user didn't do an action
 function mousePressed() 
 {
-	if (playTimer > 300 && intro_Phone.isLoaded() && !intro_Phone.isPlaying()) 
-	{
-    	//intro_Phone.play();
-		//intro_Phone.setVolume(3.0);
-  	}
 	++registeredMouseClicks;
 }
 

@@ -15,7 +15,7 @@ class Scene_Office extends Scene
     {
         super(minTimeWhenShown, maxTimeWhenShown, background_img);
 
-        this.button = createButton("Ik heb van jullie de milieubox ontvangen maar wanneer komen jullie het vieze ophalen?");
+        this.button = createButton("Vragen over de milieubox");
         this.button.mousePressed(this.onButtonClick.bind(this));
         this.button.hide();
 
