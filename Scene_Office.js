@@ -15,11 +15,11 @@ class Scene_Office extends Scene
     {
         super(minTimeWhenShown, maxTimeWhenShown, background_img);
 
-        this.button = createButton("Vragen over de milieubox");
+        this.button = createButton("Questions about the climate Box");
         this.button.mousePressed(this.onButtonClick.bind(this));
         this.button.hide();
 
-        this.button_Contact = createButton("Mijn vraag staat er niet tussen.");
+        this.button_Contact = createButton("My question is not listed.");
         this.button_Contact.mousePressed(this.onButtonClickContact.bind(this));
         this.button_Contact.hide();
         this.blockTimerUntil = 0;
