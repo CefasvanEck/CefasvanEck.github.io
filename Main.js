@@ -92,7 +92,7 @@ function setup()
 	scenes.push(new Scene(350, 450,"black"));
 	scenes[(scenes.length - 1)].addText('A few days earlier....',[0.375,0.5]);
 	scenes[(scenes.length - 1)].fadeInStrenght = 8;
-	scenes.push(new Scene(450, 650,"Loading_Boxes"));
+	scenes.push(new Scene(450, 550,"Loading_Boxes"));
 	scenes[(scenes.length - 1)].addObject_Timer("loading_boxes_dpd.",[0.5,0.505],1,[450, 550]);
 
 	//Scene 4: Quick Delivery at the Dentist Clinic
