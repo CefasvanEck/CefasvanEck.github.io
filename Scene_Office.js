@@ -59,9 +59,9 @@ class Scene_Office extends Scene
                 noFill();
                 stroke(255);
                 strokeWeight(2);
-                text('Met DRS, waar kan ik u mee helpen?', Main.widthSize * 0.0055, Main.heightSize * 0.5);
+                text('You are talking to an employee of DRS, how can I help you?', Main.widthSize * 0.0055, Main.heightSize * 0.5);
 
-                text('Klik op de vraag die u heeft:', Main.widthSize * 0.4, Main.heightSize * 0.4);
+                text('Click on the question you want to ask:', Main.widthSize * 0.4, Main.heightSize * 0.4);
                 this.button.show();
                 this.button_Contact.show();
                 return 2;
