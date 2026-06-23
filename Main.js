@@ -59,15 +59,15 @@ function setup()
 	//Setting up Scenes
 	//Scene 1: Prototype Introduction
 	scenes.push(new Scene_Intro(0, 200,"black"));
-	scenes[(scenes.length - 1)].addText('Er wordt bijgehouden hoe lang u naar dit filmpje kijkt en waar u op klikt op het scherm.',[0.3,0.25]);
-	scenes[(scenes.length - 1)].addText('Dit wordt gebruikt om dit filmpje te verbeteren en uw vragen beter te beantwoorden...',[0.35,0.3]);
+	//scenes[(scenes.length - 1)].addText('Er wordt bijgehouden hoe lang u naar dit filmpje kijkt en waar u op klikt op het scherm.',[0.3,0.25]);
+	//scenes[(scenes.length - 1)].addText('Dit wordt gebruikt om dit filmpje te verbeteren en uw vragen beter te beantwoorden...',[0.35,0.3]);
+    
+	scenes[(scenes.length - 1)].addText('This animation is meant to answer your questions about the delivery and pickup of the climate box.',[0.17,0.15]);
 
-	scenes[(scenes.length - 1)].addText('Dit filmpje is bedoeld om uw vraag te beantwoorden over het leveren en ophalen van de milieubox.',[0.17,0.15]);
-
-	button = createButton("Klik hier om de voorwaarden te accepteren en het filmpje te starten");
+	button = createButton("Click here to accept the Terms of Service and start the animation.");
     button.mousePressed(onButtonClick);
 
-	button_voorwaarden = createButton("Klik hier om de uitgebreide voorwaarden te lezen.");
+	button_voorwaarden = createButton("Click here to read the Terms and Conditions.");
     button_voorwaarden.mousePressed(onButtonClickVoorwaarden);
 
 	//Scene 2: Office, select Question
@@ -90,7 +90,7 @@ function setup()
 	
 	//Scene 3: Loading Clean, empty Climate Boxes at DRS Company
 	scenes.push(new Scene(350, 450,"black"));
-	scenes[(scenes.length - 1)].addText('Een aantal dagen eerder....',[0.375,0.5]);
+	scenes[(scenes.length - 1)].addText('A few day earlier....',[0.375,0.5]);
 	scenes[(scenes.length - 1)].fadeInStrenght = 8;
 	scenes.push(new Scene(450, 650,"Loading_Boxes"));
 	scenes[(scenes.length - 1)].addObject_Timer("loading_boxes_dpd.",[0.5,0.505],1,[450, 550]);
@@ -108,8 +108,8 @@ function setup()
 
 	//Scene 6: the end Testing Prototype
 	scenes.push(new Scene_Intro(950, 1100,"black"));
-	scenes[(scenes.length - 1)].addText('Einde van de video',[0.4,0.55]);
-	scenes[(scenes.length - 1)].addText('is Uw vraag beantwoord?',[0.4,0.6]);
+	scenes[(scenes.length - 1)].addText('End of the video',[0.4,0.55]);
+	scenes[(scenes.length - 1)].addText('id it answer your question?',[0.4,0.6]);
 	buttonEnd = createButton("Ja");
     buttonEnd.mousePressed(yesButtonClick);
 	buttonEnd.hide();
@@ -182,7 +182,7 @@ function onButtonClickVoorwaarden()
 		showVoorwaarden = 0;
 		button_voorwaarden.show();
 		button.show();
-		button_voorwaarden.html("Klik hier om de uitgebreide voorwaarden te lezen.");
+		button_voorwaarden.html("Click here to read the Terms and Conditions.");
 	}
 	console.log("klik werkt");
 }
@@ -296,7 +296,7 @@ function draw()
 
 				if (button_voorwaarden.elt.style.display === "none")
 				{
-					button_voorwaarden.html("Klik hier om terug te gaan naar het filmpje");
+					button_voorwaarden.html("Click here to go back to the aniamtion");
 					anchorDOM(button_voorwaarden, 0.48,0.875);
 					button_voorwaarden.show();
 				}
