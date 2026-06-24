@@ -209,7 +209,7 @@ function onUpdate(spawnEachFrame)
 		intro_Phone.setVolume(1.0);
   	}
 
-	if (playTimer == 100 && song.isLoaded() && !song.isPlaying()) 
+	if (playTimer == 105 && song.isLoaded() && !song.isPlaying()) 
 	{
     	song.play();
 		song.setVolume(0.1);
