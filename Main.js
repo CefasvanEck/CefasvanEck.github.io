@@ -109,8 +109,7 @@ function setup()
 	//Scene 6: the end Testing Prototype
 	scenes.push(new Scene_Intro(950, 1100,"black"));
 	scenes[(scenes.length - 1)].addText('End of the video',[0.4,0.55]);
-	scenes[(scenes.length - 1)].addText('id it answer your question?',[0.4,0.6]);
-	buttonEnd = createButton("Ja");
+	buttonEnd = createButton("Restart Animation");
     buttonEnd.mousePressed(yesButtonClick);
 	buttonEnd.hide();
 	blockTimer = false;
@@ -189,6 +188,7 @@ function onButtonClickVoorwaarden()
 
 function yesButtonClick()
 {
+    window.location.reload(true);
 	sendMail('User with ID: ' + Main.watcherID + ' clicked Yes for question being answered.');
 	console.log("klik werkt");
 }
