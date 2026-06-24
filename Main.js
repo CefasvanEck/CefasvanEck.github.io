@@ -203,17 +203,17 @@ function onUpdate(spawnEachFrame)
 		}
 	}
 
+	if (playTimer == 210 && song.isLoaded() && !song.isPlaying()) 
+	{
+		song.play();
+		song.setVolume(0.1);
+	}
+
 	if (playTimer == 300 && intro_Phone.isLoaded() && !intro_Phone.isPlaying()) 
 	{
     	intro_Phone.play();
 		intro_Phone.setVolume(1.0);
   	}
-
-	if (playTimer == 250 && song.isLoaded() && !song.isPlaying()) 
-	{
-    	song.play();
-		song.setVolume(0.1);
-	}
 
 	if(playTimer == 950)
 	{
