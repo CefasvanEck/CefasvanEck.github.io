@@ -61,7 +61,7 @@ function setup()
 	//scenes[(scenes.length - 1)].addText('Er wordt bijgehouden hoe lang u naar dit filmpje kijkt en waar u op klikt op het scherm.',[0.3,0.25]);
 	//scenes[(scenes.length - 1)].addText('Dit wordt gebruikt om dit filmpje te verbeteren en uw vragen beter te beantwoorden...',[0.35,0.3]);
     
-	scenes[(scenes.length - 1)].addText('This animation is meant to answer your questions about the delivery and pickup of the climate box.',[0.13,0.15]);
+	scenes[(scenes.length - 1)].addText('This animation is meant to answer your questions about the delivery and pickup of the climate box.',[0.11,0.15]);
 
 	button = createButton("Start the animation.");
     button.mousePressed(onButtonClick);
@@ -265,7 +265,7 @@ function draw()
 				}
 			}
 
-			anchorDOM(button, 0.5,0.55);
+			anchorDOM(button, 0.55,0.55);
 			anchorDOM(buttonEnd, 0.45,0.65);
 		}
 	}	
