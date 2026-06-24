@@ -43,8 +43,8 @@ class Scene_Office extends Scene
         {
             super.renderFromTimer(currentTime);
 
-            anchorDOM(this.button, 0.4, 0.43);
-            anchorDOM(this.button_Contact, 0.4, 0.46);
+            anchorDOM(this.button, 0.4, 0.425);
+            anchorDOM(this.button_Contact, 0.4, 0.47);
             
 
             if(currentTime == this.maxTimeWhenRenderThis - 1)
