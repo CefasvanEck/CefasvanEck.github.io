@@ -203,7 +203,7 @@ function onUpdate(spawnEachFrame)
 		}
 	}
 
-	if (playTimer == 210 && song.isLoaded() && !song.isPlaying()) 
+	if (playTimer == 180 && song.isLoaded() && !song.isPlaying()) 
 	{
 		song.play();
 		song.setVolume(0.1);
