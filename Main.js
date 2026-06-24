@@ -154,8 +154,6 @@ function onButtonClick()
 {
 	if (song.isLoaded() && !song.isPlaying()) 
 	{
-    	song.play();
-		song.setVolume(0.1);
 		//Send the first email
 		sendMail('Someone started watching the video with ID: ' + Main.watcherID + ' ; Timer before User Clicked video: ' + timerBeforeClicked + ' ; Scrolling: ' + registeredScrolling);
 		timerBeforeClicked = 0;
@@ -210,6 +208,12 @@ function onUpdate(spawnEachFrame)
     	intro_Phone.play();
 		intro_Phone.setVolume(1.0);
   	}
+
+	if (playTimer == 100 && song.isLoaded() && !song.isPlaying()) 
+	{
+    	song.play();
+		song.setVolume(0.1);
+	}
 
 	if(playTimer == 950)
 	{
