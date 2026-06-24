@@ -265,7 +265,7 @@ function draw()
 				}
 			}
 
-			anchorDOM(button, 0.45 - 0.05,0.55);
+			anchorDOM(button, 0.5,0.55);
 			anchorDOM(buttonEnd, 0.45,0.65);
 		}
 	}	
