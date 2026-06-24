@@ -269,8 +269,8 @@ function draw()
 				}
 			}
 
-			anchorDOM(button, 0.45,0.55);
-			anchorDOM(button_voorwaarden, 0.48,0.62);
+			anchorDOM(button, 0.45 - 0.05,0.55);
+			anchorDOM(button_voorwaarden, 0.48 - 0.05,0.62);
 			anchorDOM(buttonEnd, 0.45,0.65);
 		}
 	}
