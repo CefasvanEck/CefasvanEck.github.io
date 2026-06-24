@@ -15,7 +15,6 @@ let scrollY = 0;
 var showVoorwaarden;
 
 let button;
-let button_voorwaarden;
 let buttonEnd;
 
 /** Shared global values **/
@@ -64,11 +63,8 @@ function setup()
     
 	scenes[(scenes.length - 1)].addText('This animation is meant to answer your questions about the delivery and pickup of the climate box.',[0.17,0.15]);
 
-	button = createButton("Click here to accept the Terms of Service and start the animation.");
+	button = createButton("Start the animation.");
     button.mousePressed(onButtonClick);
-
-	button_voorwaarden = createButton("Click here to read the Terms and Conditions.");
-    button_voorwaarden.mousePressed(onButtonClickVoorwaarden);
 
 	//Scene 2: Office, select Question
 	scenes.push(new Scene_Office(200, 350,"DRS_background"));
@@ -159,7 +155,6 @@ function onButtonClick()
 		timerBeforeClicked = 0;
 		registeredScrolling = 0;
   	}
-	button_voorwaarden.hide();
 	button.hide();
 	console.log("klik werkt");
 }
@@ -169,7 +164,6 @@ function onButtonClickVoorwaarden()
 	if(showVoorwaarden == 0)
 	{
 		showVoorwaarden = 1;
-		button_voorwaarden.hide();
 		button.hide();
 	}
 	else
@@ -177,9 +171,7 @@ function onButtonClickVoorwaarden()
 		playTimer = 0;
 		this.blockTimer = true;
 		showVoorwaarden = 0;
-		button_voorwaarden.show();
 		button.show();
-		button_voorwaarden.html("Click here to read the Terms and Conditions.");
 	}
 	console.log("klik werkt");
 }
@@ -274,41 +266,7 @@ function draw()
 			}
 
 			anchorDOM(button, 0.45 - 0.05,0.55);
-			anchorDOM(button_voorwaarden, 0.48 - 0.05,0.62);
 			anchorDOM(buttonEnd, 0.45,0.65);
-		}
-	}
-	else
-	{
-		fill(255);
-		textSize(13);
-		let x = 0.1;
-		let startY = 0.0;
-		let regelHoogte = 16;
-
-		for (let i = 0; i < voorwaarden.length; i++) 
-		{
-			let maxScroll = Math.max(0, voorwaarden.length * regelHoogte - Main.heightSize);
-			scrollY = constrain(scrollY, 0, maxScroll);
-
-			let y = Main.heightSize *  startY + i * regelHoogte - scrollY;
-
-			// Alleen renderen als zichtbaar
-			if (y > -regelHoogte && y < Main.heightSize + regelHoogte) 
-			{
-				text(voorwaarden[i], Main.widthSize * x,y);
-
-				if (button_voorwaarden.elt.style.display === "none")
-				{
-					button_voorwaarden.html("Click here to go back to the aniamtion");
-					anchorDOM(button_voorwaarden, 0.48,0.875);
-					button_voorwaarden.show();
-				}
-			}
-			else if (button_voorwaarden.elt.style.display !== "none")
-			{
-				button_voorwaarden.hide();
-			}
 		}
 	}	
 }
