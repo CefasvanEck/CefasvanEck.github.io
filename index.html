@@ -3,25 +3,39 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
+
     <title>DRS Animatie</title>
-    <style> body {padding: 0; margin: 0; overflow: hidden;} </style>
-<script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/addons/p5.sound.min.js"></script>
+
+    <style>
+      body {padding: 0; margin: 0; overflow: hidden;}
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/addons/p5.sound.min.js"></script>
+
+    <script>
+      // Force browser to revalidate this page
+      if (performance.getEntriesByType("navigation")[0]?.type === "reload") {
+        console.log("Page reloaded - cache revalidated");
+      }
+    </script>
+
     <script src="Scene.js"></script>
     <script src="Scene_Intro.js"></script>
     <script src="Scene_Office.js"></script>
     <script src="Main.js"></script>
-
+    <script src="Scene_Delivery_Game.js"></script>
+        <script src="Scene_Cleanup_Game.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
     <script>
     (function() 
     {
       emailjs.init("wID-IoeiMMBS4j4Px");
     })();
-//Contact Us: {{Grad-Project-Data}}
+
+    //Contact Us: {{Grad-Project-Data}}
     function sendMail(data) 
     {
       emailjs.send("service_ledsftk", "template_kt0ly73", 
@@ -38,6 +52,7 @@
     </script>
 
   </head>
+
   <body>
   </body>
 </html>

@@ -15,17 +15,17 @@ class Scene_Office extends Scene
     {
         super(minTimeWhenShown, maxTimeWhenShown, background_img);
 
-        this.button = createButton("Questions about the climate Box");
+        this.button = createButton("Vragen over de milieubox");
         this.button.mousePressed(this.onButtonClick.bind(this));
         this.button.hide();
 
-        this.button_Contact = createButton("My question is not listed.");
+        this.button_Contact = createButton("Mijn vraag staat er niet tussen.");
         this.button_Contact.mousePressed(this.onButtonClickContact.bind(this));
         this.button_Contact.hide();
         this.blockTimerUntil = 0;
         this.showContactInfo = 0;
 
-        this.img_info = loadImage("Contact_Info.png");
+        this.img_info = this.refreshLoadImage("Contact_Info.png");
     }
 
     renderFromTimer(currentTime) 
@@ -44,7 +44,7 @@ class Scene_Office extends Scene
             super.renderFromTimer(currentTime);
 
             anchorDOM(this.button, 0.4, 0.425);
-            anchorDOM(this.button_Contact, 0.4, 0.47);
+            anchorDOM(this.button_Contact, 0.4, 0.465);
             
 
             if(currentTime == this.maxTimeWhenRenderThis - 1)
@@ -59,9 +59,9 @@ class Scene_Office extends Scene
                 noFill();
                 stroke(255);
                 strokeWeight(2);
-                text('You are talking to an employee of DRS, how can I help you?', Main.widthSize * 0.0055, Main.heightSize * 0.5);
+                text('Met DRS, waar kan ik u mee helpen?', Main.widthSize * 0.0055, Main.heightSize * 0.5);
 
-                text('Click on the question you want to ask:', Main.widthSize * 0.4, Main.heightSize * 0.4);
+                text('Klik op de vraag die u heeft:', Main.widthSize * 0.4, Main.heightSize * 0.4);
                 this.button.show();
                 this.button_Contact.show();
                 return 2;
@@ -77,7 +77,6 @@ class Scene_Office extends Scene
         this.blockTimerUntil = 1;
         console.log("klik werkt");
         Main.pickup_DPD.play();
-        sendMail('Watched video until Question in Office Scene with ID: ' + Main.watcherID + ' Question Clicked: ');
     }
 
     onButtonClickContact()
@@ -85,6 +84,5 @@ class Scene_Office extends Scene
         this.button.remove();
         this.button_Contact.remove();
         this.showContactInfo = 1;
-        sendMail('Has other Question Office Scene with ID: ' + Main.watcherID);
     }
 }

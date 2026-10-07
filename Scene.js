@@ -1,12 +1,15 @@
-class Scene 
+class Scene
 {
     timeWhenRenderThis;
     maxTimeWhenRenderThis;
     img_background;
-    //Render texture Objects
+
+    // Render texture objects
     img_object = [];
     img_position = [];
+    img_rotation = [];
     img_scale = [];
+    img_shouldRender = [];
     img_ShowBetweenTime = [];
     img_MoveTo = [];
 
@@ -18,11 +21,11 @@ class Scene
     endsWithBlackScreen;
 
 
-    constructor(minTimeWhenShown, maxTimeWhenShown, background_img) 
+    constructor(minTimeWhenShown, maxTimeWhenShown, background_img)
     {
         this.timeWhenRenderThis = minTimeWhenShown;
 
-        if(maxTimeWhenShown == null)
+        if (maxTimeWhenShown == null)
         {
             this.maxTimeWhenRenderThis = 100000000;
         }
@@ -30,69 +33,152 @@ class Scene
         {
             this.maxTimeWhenRenderThis = maxTimeWhenShown;
         }
-        
-        this.img_background = loadImage(background_img + ".png");
+
+        this.img_background = this.refreshLoadImage(background_img + ".png");
     }
+
 
     setEndsWithBlackScreen()
     {
         this.endsWithBlackScreen = 1;
     }
 
-    addObject(object_img,objectPosition,object_scale)
+
+    addObject(object_img, objectPosition, object_scale)
     {
-        if(object_img.includes("."))
+        if (object_img.includes("."))
         {
             let vid = createVideo(object_img + "mp4");
             this.img_object.push(vid);
         }
         else
         {
-            this.img_object.push(loadImage(object_img + ".png"));
-        }
-        
-        this.img_position.push([objectPosition[0],objectPosition[1]]);
-        this.img_scale.push(object_scale);
-        this.img_ShowBetweenTime.push([0, 0]);
-    }
- 
-    addObject_Timer(object_img,objectPosition,object_scale,object_BetweenTime)
-    {
-        if(object_img.includes("."))
-        {
-            let vid = createVideo(object_img + "mp4");
-            this.img_object.push(vid);
-        }
-        else
-        {
-            this.img_object.push(loadImage(object_img + ".png"));
+            this.img_object.push(this.refreshLoadImage(object_img + ".png"));
         }
 
-        this.img_position.push([objectPosition[0],objectPosition[1]]);
+        this.img_position.push([objectPosition[0], objectPosition[1]]);
+        this.img_rotation.push(0);
         this.img_scale.push(object_scale);
+        this.img_shouldRender.push(0);
+        this.img_ShowBetweenTime.push([0, 0]);
+    }
+
+    addObject_HalfScale(object_img, objectPosition, object_scale)
+    {
+        if (object_img.includes("."))
+        {
+            let vid = createVideo(object_img + "mp4");
+            this.img_object.push(vid);
+        }
+        else
+        {
+            this.img_object.push(this.refreshLoadImage(object_img + ".png"));
+        }
+
+        this.img_position.push([objectPosition[0], objectPosition[1]]);
+        this.img_rotation.push(-1);
+        this.img_scale.push(object_scale);
+        this.img_shouldRender.push(0);
+        this.img_ShowBetweenTime.push([0, 0]);
+    }
+
+    removeObject(idToRemove)
+    {
+        if (this.img_object[idToRemove] !== undefined)
+        {
+            this.img_object.splice(idToRemove, 1);
+        }
+
+        if (this.img_position[idToRemove] !== undefined)
+        {
+            this.img_position.splice(idToRemove, 1);
+        }
+
+        if (this.img_rotation[idToRemove] !== undefined)
+        {
+            this.img_rotation.splice(idToRemove, 1);
+        }
+
+        if (this.img_scale[idToRemove] !== undefined)
+        {
+            this.img_scale.splice(idToRemove, 1);
+        }
+
+        if (this.img_shouldRender[idToRemove] !== undefined)
+        {
+            this.img_shouldRender.splice(idToRemove, 1);
+        }
+
+        if (this.img_ShowBetweenTime[idToRemove] !== undefined)
+        {
+            this.img_ShowBetweenTime.splice(idToRemove, 1);
+        }
+
+        if (this.img_MoveTo[idToRemove] !== undefined)
+        {
+            this.img_MoveTo.splice(idToRemove, 1);
+        }
+    }
+
+    addObjectRotation(object_img, objectPosition, objectRotation, object_scale)
+    {
+        if (object_img.includes("."))
+        {
+            let vid = createVideo(object_img + "mp4");
+            this.img_object.push(vid);
+        }
+        else
+        {
+            this.img_object.push(this.refreshLoadImage(object_img + ".png"));
+        }
+
+        this.img_position.push([objectPosition[0], objectPosition[1]]);
+        this.img_rotation.push(objectRotation);
+        this.img_scale.push(object_scale);
+        this.img_shouldRender.push(0);
+        this.img_ShowBetweenTime.push([0, 0]);
+    }
+
+
+    addObject_Timer(object_img, objectPosition, object_scale, object_BetweenTime)
+    {
+        if (object_img.includes("."))
+        {
+            let vid = createVideo(object_img + "mp4");
+            this.img_object.push(vid);
+        }
+        else
+        {
+            this.img_object.push(this.refreshLoadImage(object_img + ".png"));
+        }
+
+        this.img_position.push([objectPosition[0], objectPosition[1]]);
+        this.img_rotation.push(0);
+        this.img_scale.push(object_scale);
+        this.img_shouldRender.push(0);
         this.img_ShowBetweenTime.push(object_BetweenTime);
     }
 
-    addText(text,text_Position)
+    addText(text, text_Position)
     {
         this.text_object.push(text);
-        this.text_position.push(([text_Position[0],text_Position[1]]));
+        this.text_position.push([text_Position[0], text_Position[1]]);
     }
 
     renderScreen(currentTime)
     {
-        if(this.timeWhenRenderThis == currentTime || (currentTime >= this.timeWhenRenderThis && currentTime <= this.maxTimeWhenRenderThis))
+        if (this.timeWhenRenderThis == currentTime || (currentTime >= this.timeWhenRenderThis && currentTime <= this.maxTimeWhenRenderThis))
         {
             return this.renderFromTimer(currentTime);
         }
-        else return 0;
+        else
+        {
+            return 0;
+        }
     }
 
-    renderFromTimer(currentTime) 
+    renderBackground(currentTime)
     {
-        push();
-        imageMode(CENTER);
-
         if((this.fadeInStrenght > 0 && currentTime > this.timeWhenRenderThis) || this.fadeInStrenght == 0)
         {
             // Draw the background
@@ -101,12 +187,20 @@ class Scene
                 image(this.img_background, Main.widthSize / 2, Main.heightSize / 2, Main.widthSize, Main.heightSize);
             }
         }
+    }
 
-        for(var i = 0;i < this.img_object.length;++i)
+    renderFromTimer(currentTime) 
+    {
+        push();
+        imageMode(CENTER);
+
+        this.renderBackground(currentTime);
+
+        for(var i = this.img_object.length - 1;i > 0;--i)
         {
             imageMode(CENTER);
             // Draw
-            if ((this.img_ShowBetweenTime[i][0] === 0 && this.img_ShowBetweenTime[i][1] === 0) || (currentTime >= this.img_ShowBetweenTime[i][0] && currentTime <= this.img_ShowBetweenTime[i][1]))
+            if (this.img_shouldRender[i] == 0 && ((this.img_ShowBetweenTime[i][0] === 0 && this.img_ShowBetweenTime[i][1] === 0) || (currentTime >= this.img_ShowBetweenTime[i][0] && currentTime <= this.img_ShowBetweenTime[i][1])))
             {
                 if (this.img_object[i] instanceof p5.MediaElement)
                 {
@@ -115,6 +209,7 @@ class Scene
                         this.img_object[i].play();
                         this.img_object[i].playedOnce = true;
                     }
+
                     image(
                     this.img_object[i],
                     Main.widthSize * this.img_position[i][0],
@@ -125,7 +220,31 @@ class Scene
                 }
                 else
                 {
-                    image(this.img_object[i], width * this.img_position[i][0],Main.heightSize * this.img_position[i][1], Main.heightSize * this.img_scale[i], Main.heightSize * this.img_scale[i]);
+                    if (this.img_rotation[i] > 0)
+                    {
+                        push();
+
+                        translate(width * (this.img_position[i][0]), Main.heightSize * (this.img_position[i][1]));
+                        rotate(this.img_rotation[i]);
+                        image(this.img_object[i], 0, 0, Main.widthSize * this.img_scale[i], (Main.heightSize * 2) * this.img_scale[i]);
+
+                        pop();
+
+                        this.img_rotation[i] -= 0.15;
+
+                        if (this.img_rotation[i] < 0)
+                        {
+                            this.img_rotation[i] = 360 - 0.15;
+                        }
+                    }
+                    else if(this.img_rotation[i] < 0)
+                    {
+                        image(this.img_object[i], width * this.img_position[i][0],Main.heightSize * this.img_position[i][1], Main.heightSize * this.img_scale[i], (Main.heightSize / 2) * this.img_scale[i]);
+                    }
+                    else
+                    {
+                        image(this.img_object[i], width * this.img_position[i][0],Main.heightSize * this.img_position[i][1], Main.heightSize * this.img_scale[i], Main.heightSize * this.img_scale[i]);
+                    }
                 }
             }
         }
@@ -153,4 +272,10 @@ class Scene
 
         return 1;
     }  
+
+
+    refreshLoadImage(imagePath)
+    {
+        return loadImage(imagePath + (imagePath.includes("?") ? "&" : "?") + "v=" + Date.now());
+    }
 }
