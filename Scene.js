@@ -20,10 +20,12 @@ class Scene
     fadeInStrenght = 0;
     endsWithBlackScreen;
 
+    zeroToLastLoop;
 
     constructor(minTimeWhenShown, maxTimeWhenShown, background_img)
     {
         this.timeWhenRenderThis = minTimeWhenShown;
+        this.zeroToLastLoop = false;
 
         if (maxTimeWhenShown == null)
         {
@@ -196,58 +198,21 @@ class Scene
 
         this.renderBackground(currentTime);
 
-        for(var i = this.img_object.length - 1;i > 0;--i)
+        if(!this.zeroToLastLoop)
         {
-            imageMode(CENTER);
-            // Draw
-            if (this.img_shouldRender[i] == 0 && ((this.img_ShowBetweenTime[i][0] === 0 && this.img_ShowBetweenTime[i][1] === 0) || (currentTime >= this.img_ShowBetweenTime[i][0] && currentTime <= this.img_ShowBetweenTime[i][1])))
+            for(var i = this.img_object.length - 1;i > 0;--i)
             {
-                if (this.img_object[i] instanceof p5.MediaElement)
-                {
-                    if (!this.img_object[i].playedOnce)
-                    {
-                        this.img_object[i].play();
-                        this.img_object[i].playedOnce = true;
-                    }
-
-                    image(
-                    this.img_object[i],
-                    Main.widthSize * this.img_position[i][0],
-                    Main.heightSize * this.img_position[i][1],
-                    Main.widthSize * this.img_scale[i],
-                    Main.heightSize * this.img_scale[i]
-                    ); 
-                }
-                else
-                {
-                    if (this.img_rotation[i] > 0)
-                    {
-                        push();
-
-                        translate(width * (this.img_position[i][0]), Main.heightSize * (this.img_position[i][1]));
-                        rotate(this.img_rotation[i]);
-                        image(this.img_object[i], 0, 0, Main.widthSize * this.img_scale[i], (Main.heightSize * 2) * this.img_scale[i]);
-
-                        pop();
-
-                        this.img_rotation[i] -= 0.15;
-
-                        if (this.img_rotation[i] < 0)
-                        {
-                            this.img_rotation[i] = 360 - 0.15;
-                        }
-                    }
-                    else if(this.img_rotation[i] < 0)
-                    {
-                        image(this.img_object[i], width * this.img_position[i][0],Main.heightSize * this.img_position[i][1], Main.heightSize * this.img_scale[i], (Main.heightSize / 2) * this.img_scale[i]);
-                    }
-                    else
-                    {
-                        image(this.img_object[i], width * this.img_position[i][0],Main.heightSize * this.img_position[i][1], Main.heightSize * this.img_scale[i], Main.heightSize * this.img_scale[i]);
-                    }
-                }
+                this.renderLoop(currentTime, i);
             }
         }
+        else
+        {
+            for(var i = 0;i < this.img_object.length;++i)
+            {
+                this.renderLoop(currentTime, i);
+            }
+        }
+
 
         for(var j = 0;j < this.text_object.length;++j)
         {
@@ -272,6 +237,64 @@ class Scene
 
         return 1;
     }  
+
+    renderLoop(currentTime, i)
+    {
+        imageMode(CENTER);
+        // Draw
+        if (this.img_shouldRender[i] == 0 && ((this.img_ShowBetweenTime[i][0] === 0 && this.img_ShowBetweenTime[i][1] === 0) || (currentTime >= this.img_ShowBetweenTime[i][0] && currentTime <= this.img_ShowBetweenTime[i][1])))
+        {
+            if (this.img_object[i] instanceof p5.MediaElement)
+            {
+                if (!this.img_object[i].playedOnce)
+                {
+                    this.img_object[i].play();
+                    this.img_object[i].playedOnce = true;
+                }
+
+                image(
+                this.img_object[i],
+                Main.widthSize * this.img_position[i][0],
+                Main.heightSize * this.img_position[i][1],
+                Main.widthSize * this.img_scale[i],
+                Main.heightSize * this.img_scale[i]
+                ); 
+            }
+            else
+            {
+                if (this.img_rotation[i] > 0)
+                {
+                    const scaleFactor = Math.min(width / Main.widthSize, height / Main.heightSize);
+
+                    push();
+                    translate((width - Main.widthSize * scaleFactor) / 2, (height - Main.heightSize * scaleFactor) / 2);
+                    scale(scaleFactor);
+
+                    translate(Main.widthSize * this.img_position[i][0], Main.heightSize * this.img_position[i][1]);
+                    rotate(this.img_rotation[i]);
+
+                    image(this.img_object[i], 0, 0, Main.widthSize * this.img_scale[i], Main.widthSize * this.img_scale[i]);
+
+                    pop();
+
+                    this.img_rotation[i] -= 0.15;
+
+                    if (this.img_rotation[i] < 0)
+                    {
+                        this.img_rotation[i] = 360 - 0.15;
+                    }
+                }
+                else if(this.img_rotation[i] < 0)
+                {
+                    image(this.img_object[i], width * this.img_position[i][0],Main.heightSize * this.img_position[i][1], Main.heightSize * this.img_scale[i], (Main.heightSize / 2) * this.img_scale[i]);
+                }
+                else
+                {
+                    image(this.img_object[i], width * this.img_position[i][0],Main.heightSize * this.img_position[i][1], Main.heightSize * this.img_scale[i], Main.heightSize * this.img_scale[i]);
+                }
+            }
+        }
+    }
 
 
     refreshLoadImage(imagePath)

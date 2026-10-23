@@ -19,8 +19,10 @@ class Scene_Delivery_Game extends Scene
     currentCar;
     //Info Display text
     questMessage;
+    extraMessage;
 
     //Game Play Element
+    houseNumbRendered;
     gameplayTimer_GPE;
     switchTimer_GPE;
     questFailTimer_GPE;
@@ -38,7 +40,11 @@ class Scene_Delivery_Game extends Scene
     failOrSuccID_1;
     failOrSuccID_2;
     failOrSuccID_3;
+    //
     failOrSuccID_4;
+    failOrSuccID_5;
+    failOrSuccID_6;
+
 
     questType;
     
@@ -48,7 +54,7 @@ class Scene_Delivery_Game extends Scene
 
     DRS_Animation;
     DPD_Animation;
-    BoxDropoff_Animation
+    BoxDropoff_Animation;
 
 //Trees spawn random and get removed like the boxes when outside the screen
     img_background_loop;
@@ -74,16 +80,19 @@ class Scene_Delivery_Game extends Scene
         this.coundBackgroundLoop = 0;
         //End
 
-
         this.questMessage = "Box ophalen";
+        this.questType = 0;
         
         this.button_CarSwitch_GPE = createButton("Wissel tussen auto's");
         this.button_CarSwitch_GPE.mousePressed(this.onButtonCarSwitchClick.bind(this));
         this.button_CarSwitch_GPE.hide();
+        this.button_CarSwitch_GPE.html("Wissel naar DRS auto");
+        this.button_CarSwitch_GPE.style("background-color", "#DDFFF0");
 
         this.button_DropOrCollectBox_GPE = createButton("Bezorg Millieu-box");
         this.button_DropOrCollectBox_GPE.mousePressed(this.onButtonDropBox.bind(this));
         this.button_DropOrCollectBox_GPE.hide();
+        this.button_DropOrCollectBox_GPE.style("background-color", "#FFD1D1");
 
         this.button_DropOrCollectBox_GPE.style("border", "none");
         this.button_DropOrCollectBox_GPE.style("background-image", "url('Climate_Box.png')");
@@ -101,12 +110,12 @@ class Scene_Delivery_Game extends Scene
         this.gameplayTimer_GPE = 0;
         this.currentSecond = new Date().getMilliseconds();
         
-        this.switchTimer_GPE = 0;
+        this.switchTimer_GPE = 60;
         this.spawnedBoxTimer_GPE = 0;
         this.spawnedHouseNumberTimer_GPE = 0;
         this.questFailTimer_GPE = 0;
         this.spawnedBoxDelay_GPE = 0;
-
+        this.houseNumbRendered = false;
         this.spawnChangeHousenumber = 50;
 
 
@@ -114,6 +123,7 @@ class Scene_Delivery_Game extends Scene
         this.buildingNumberToDeliver_GPE = Math.floor(Math.random() * 65);
         this.buildingNumberInWorld();
 
+        this.extraMessage = "Milieubox bezorger...";
 
         //DPD levert een box af bij 
         this.addObject("Contract",[0.065, 0.28],0.55);
@@ -136,28 +146,42 @@ class Scene_Delivery_Game extends Scene
 
         //Popups
         this.failedCounter_GPE = 0;
-        this.addObject_HalfScale("todo_popup", [0.4, 0.05], 0.2);
+
         this.addObject_HalfScale("todo_popup", [0.45, 0.05], 0.2);
         this.addObject_HalfScale("todo_popup", [0.5, 0.05], 0.2);
         this.addObject_HalfScale("todo_popup", [0.55, 0.05], 0.2);
         //End
 
-
         this.failOrSuccID_1 = this.img_object.length;
-        this.addObject_HalfScale("cross_popup", [0.4, 0.05], 0.2);
+        this.addObject_HalfScale("cross_popup", [0.45, 0.05], 0.2);
         this.img_shouldRender[this.failOrSuccID_1] = 1;
 
         this.failOrSuccID_2 = this.img_object.length;
-        this.addObject_HalfScale("cross_popup", [0.45, 0.05], 0.2);
+        this.addObject_HalfScale("cross_popup", [0.5, 0.05], 0.2);
         this.img_shouldRender[this.failOrSuccID_2] = 1;
 
         this.failOrSuccID_3 = this.img_object.length;
-        this.addObject_HalfScale("cross_popup", [0.5, 0.05], 0.2);
+        this.addObject_HalfScale("cross_popup", [0.55, 0.05], 0.2);
         this.img_shouldRender[this.failOrSuccID_3] = 1;
 
+
+
         this.failOrSuccID_4 = this.img_object.length;
-        this.addObject_HalfScale("cross_popup", [0.55, 0.05], 0.2);
+        this.addObject_HalfScale("check_popup", [0.45, 0.15], 0.2);
         this.img_shouldRender[this.failOrSuccID_4] = 1;
+
+        this.failOrSuccID_5 = this.img_object.length;
+        this.addObject_HalfScale("check_popup", [0.5, 0.15], 0.2);
+        this.img_shouldRender[this.failOrSuccID_5] = 1;
+
+        this.failOrSuccID_6 = this.img_object.length;
+        this.addObject_HalfScale("check_popup", [0.55, 0.15], 0.2);
+        this.img_shouldRender[this.failOrSuccID_6] = 1;
+
+
+        this.addObject_HalfScale("todo_popup", [0.45, 0.15], 0.2);
+        this.addObject_HalfScale("todo_popup", [0.5, 0.15], 0.2);
+        this.addObject_HalfScale("todo_popup", [0.55, 0.15], 0.2);
     }
 
     buildingNumberInWorld()
@@ -167,9 +191,9 @@ class Scene_Delivery_Game extends Scene
             if(Math.floor(Math.random() * 1) < this.spawnChangeHousenumber && Math.floor(Math.random() * 1) < 25)
             {
                 this.buildingNumberInWorld_GPE = this.buildingNumberToDeliver_GPE;  
-                
+           
                 //Only spawn a Pickup Climate Box when the Dentist Building is rendered as a background and dont spawn it when it is the Street as a Background
-                if(this.img_background_loop == this.Dentist_Bckgrnd)
+                if(this.questType == 0 && (this.img_background_loop == this.Dentist_Bckgrnd || this.img_background_loop == this.Dentist_sundown))
                 {
                     this.addObject_HalfScale("Climate_Box_2", [0, 0.8], 0.35);
                     this.droppedBoxPosition[this.img_object.length - 1] = [0, this.gameplayTimer_GPE, this.img_object.length - 1,0];
@@ -250,16 +274,24 @@ class Scene_Delivery_Game extends Scene
 
             if(currentTime > 220 && this.blockTimerUntil == 0)
             {
-                textSize(15);
+                textSize(11);
                 noFill();
                 stroke(0);
                 strokeWeight(1);
-                text(this.questMessage, Main.widthSize * 0.007, Main.heightSize * 0.15);
-                text('op huisnummer : ' + this.buildingNumberToDeliver_GPE, Main.widthSize * 0.007, Main.heightSize * 0.175);
+                text(this.questMessage, Main.widthSize * 0.007, Main.heightSize * 0.125);
+                text('op huisnummer : ' + (this.buildingNumberToDeliver_GPE + 1), Main.widthSize * 0.007, Main.heightSize * 0.15);
 
-                var time = Math.round(this.gameplayTimer_GPE / 6);
-                text('Seconde deze game ronde: ' + (time), Main.widthSize * 0.0055, Main.heightSize * 0.405);
+                text('' + this.extraMessage, Main.widthSize * 0.007, Main.heightSize * 0.22);
 
+                
+
+                //var time = Math.round(this.gameplayTimer_GPE / 6);
+                //text('Seconde deze', Main.widthSize * 0.0055, Main.heightSize * 0.3);
+                //text('game ronde: ' + (time), Main.widthSize * 0.0055, Main.heightSize * 0.3);
+
+//text('Debug: ' + (this.mainClass.playTimer), Main.widthSize * 0.0055, Main.heightSize * 0.425);
+
+                var boxExist = 0;
                 //Render house numbers
                 for (var i = 0; i < this.droppedBoxPosition.length; ++i)
                 {
@@ -277,17 +309,37 @@ class Scene_Delivery_Game extends Scene
                             //Check if it was marked as a House Number to render OR the Climate boxes
                             if((this.img_background == this.Dentist_Bckgrnd || this.img_background == this.Dentist_sundown) && this.droppedBoxPosition[i][3] < 0)
                             {
+                                this.houseNumbRendered = true;
                                 textSize(22);
                                 noFill();
-                                stroke(0);
+                                stroke(255);
                                 strokeWeight(1);
                                 //House number of building. Has a paralex effect when you drive by it, catching the attention of the Player.
-                                text('' + this.buildingNumberInWorld_GPE, Main.widthSize * ((this.img_position[objectIndex][0] + 0.178) * 1.05), Main.heightSize * 0.6);
+                                text('' + (this.buildingNumberInWorld_GPE + 1), Main.widthSize * ((this.img_position[objectIndex][0] + 0.178) * 1.05), Main.heightSize * 0.6);
+                            }
+                            else
+                            {
+                                this.houseNumbRendered = false;
                             }
                             //End
+                            boxExist = 1;
                         }
                     }
                 }
+
+                //Succesful delivery
+                if(boxExist == 0 && this.pickupBoxTimer_GPE > 0)
+                {
+                    this.addSuccesfulDelivery();
+                    this.regenerateQuest();
+                }
+
+                if(this.questFailTimer_GPE == 0 && this.spawnedBoxDelay_GPE > 5 && this.spawnedBoxDelay_GPE > 20)
+                {
+                    this.regenerateQuest();
+                    this.addSuccesfulDelivery();
+                }
+                //End
 
 //text('Klik op de vraag die u heeft:', Main.widthSize * 0.4, Main.heightSize * 0.4);
                 this.button_CarSwitch_GPE.show();
@@ -333,7 +385,9 @@ class Scene_Delivery_Game extends Scene
                 //End
 
                 this.button_DropOrCollectBox_GPE.html("Bezorg Millieu-box");
+                this.button_CarSwitch_GPE.html("Wissel naar DRS auto");
 
+                this.extraMessage = "Milieubox bezorger...";
 
                 this.img_shouldRender[this.currentCar] = 1;
                 this.img_shouldRender[this.currentCar + 1] = 0;
@@ -363,6 +417,9 @@ class Scene_Delivery_Game extends Scene
                 //End
 
                 this.button_DropOrCollectBox_GPE.html("Haal Millieu-box op");
+                this.button_CarSwitch_GPE.html("Wissel naar pakketbezorger");
+
+                this.extraMessage = "Ophalen zo'n 3 weken later...";
 
                 this.img_shouldRender[this.currentCar] = 0;
                 this.img_shouldRender[this.currentCar + 1] = 1;
@@ -375,13 +432,20 @@ class Scene_Delivery_Game extends Scene
     {
         if(this.isCarDPD) 
         {
-            //Pickup a box
-            this.pickupBoxTimer_GPE = 10;
+            if(this.houseNumbRendered)
+            {
+                //Pickup a box
+                this.pickupBoxTimer_GPE = 10;
+            }
+            else
+            {
+                this.addFailedDelivery();
+            }
         }
-        else if(this.spawnedBoxDelay_GPE == 0)
+        else if(this.spawnedBoxDelay_GPE == 0 && this.switchTimer_GPE < 11)
         {
             //Add position data to list to update x position(because we drive forward, the box stays on the ground)
-            this.addObject_HalfScale("Climate_Box", [0.5, 0.75], 0.5);
+            this.addObject_HalfScale("Climate_Box", [0.5, 0.775], 0.5);
             this.droppedBoxPosition[this.img_object.length - 1] = [0.5, this.gameplayTimer_GPE, this.img_object.length - 1, 0.5];
             this.spawnedBoxDelay_GPE = 30;
         }
@@ -406,14 +470,9 @@ class Scene_Delivery_Game extends Scene
                 this.img_shouldRender[this.failOrSuccID_3] = 0;
                 ++this.failedCounter_GPE;
             }
-            else if(this.failedCounter_GPE == 3 && this.img_shouldRender[this.failOrSuccID_4] > 0)
+            else if(this.mainClass.playTimer < 2990)
             {
-                this.img_shouldRender[this.failOrSuccID_4] = 0;
-                ++this.failedCounter_GPE;
-            }
-            else
-            {
-                this.mainClass.playTimer = 3001;
+                this.mainClass.playTimer = 2997;
             }
 
             this.questFailTimer_GPE = 15;
@@ -422,30 +481,35 @@ class Scene_Delivery_Game extends Scene
 
     addSuccesfulDelivery()
     {
-        if(this.failedCounter_GPE > 0)
+        //Cannot deliver a Climate Box when your task is to collect it, results in quest failed
+        if(this.questType == 0 && this.spawnedBoxDelay_GPE > 0 && this.questFailTimer_GPE == 0)
         {
-            if(this.img_shouldRender[this.failOrSuccID_4] == 0)
+            addFailedDelivery();
+            this.questFailTimer_GPE = 15;
+        }
+        else if(this.questFailTimer_GPE == 0)
+        {
+            if(this.img_shouldRender[this.failOrSuccID_4] == 1)
             {
-                this.img_shouldRender[this.failOrSuccID_4] = 1;
-                --this.failedCounter_GPE;
+                this.img_shouldRender[this.failOrSuccID_4] = 0;
             }
-            else if(this.img_shouldRender[this.failOrSuccID_3] == 0)
+            else if(this.img_shouldRender[this.failOrSuccID_5] == 1)
             {
-                this.img_shouldRender[this.failOrSuccID_3] = 1;
-                --this.failedCounter_GPE;
+                this.img_shouldRender[this.failOrSuccID_5] = 0;
             }
-            else if(this.img_shouldRender[this.failOrSuccID_2] == 0)
+            else if(this.img_shouldRender[this.failOrSuccID_6] == 1)
             {
-                this.img_shouldRender[this.failOrSuccID_2] = 1;
-                --this.failedCounter_GPE;
+                this.img_shouldRender[this.failOrSuccID_6] = 0;
             }
-            else if(this.img_shouldRender[this.failOrSuccID_4] == 0)
+            else if(this.mainClass.playTimer < 2990)
             {
-                this.img_shouldRender[this.failOrSuccID_1] = 1;
-                --this.failedCounter_GPE;
+                this.mainClass.playTimer = 2997;
             }
+
+            this.questFailTimer_GPE = 15;
         }
     }
+
 
 //&& Math.floor(Math.random() * 100) < this.spawnChangeWasteBox 
     spawnHousenumber()
@@ -465,6 +529,30 @@ class Scene_Delivery_Game extends Scene
         this.this.button_DropOrCollectBox_GPE.remove();
         this.button_Contact.remove();
         this.showContactInfo = 1;
+    }
+
+    regenerateQuest()
+    {
+        var numberGen = Math.floor(Math.random() * 65);
+        if(numberGen == this.buildingNumberToDeliver_GPE)
+        {
+            ++numberGen;
+        } 
+        
+        this.buildingNumberToDeliver_GPE = numberGen; 
+        this.buildingNumberInWorld_GPE = Math.floor(Math.random() * 65);
+
+        //Quest setting
+        if(Math.floor(Math.random() * 10000) > 5000)
+        {
+            this.questType = 0;
+            this.questMessage = 'Box ophalen';
+        }
+        else
+        {
+            this.questType = 1;
+            this.questMessage = 'Box afgeven';
+        }
     }
 
     renderBackground(currentTime)
@@ -492,8 +580,6 @@ class Scene_Delivery_Game extends Scene
 
                     if (this.droppedBoxPosition[i][0] > 1.3 || ((this.pickupBoxTimer_GPE > 0 || this.spawnedBoxDelay_GPE > 20) && this.droppedBoxPosition[i][0] > 0.35 && this.droppedBoxPosition[i][0] < 0.65))
                     {
-//this.addSuccesfulDelivery();
-
                         //Regenerate Housenumber in Contract and the Clinic House number in the world
                         if((this.questType == 0 || this.questType == 1)  && this.pickupBoxTimer_GPE > 0)
                         {
@@ -501,26 +587,8 @@ class Scene_Delivery_Game extends Scene
                             (this.img_background == this.Dentist_sundown || this.img_background ==  this.Dentist_Bckgrnd))
                             //Bug fix 18, line 489 only
                             {
-                                var numberGen = Math.floor(Math.random() * 65);
-                                if(numberGen == this.buildingNumberToDeliver_GPE)
-                                {
-                                    ++numberGen;
-                                }
-                                
-                                this.buildingNumberToDeliver_GPE = numberGen; 
-                                this.buildingNumberInWorld_GPE = Math.floor(Math.random() * 65);
-
-                                //Quest setting
-                                if(Math.floor(Math.random() * 100) > 50)
-                                {
-                                    this.questType = 0;
-                                    this.questMessage = 'Box ophalen';
-                                }
-                                else
-                                {
-                                    this.questType = 1;
-                                    this.questMessage = 'Box afgeven';
-                                }
+                                this.regenerateQuest();
+                                this.addSuccesfulDelivery();
                             }
                             else
                             {
