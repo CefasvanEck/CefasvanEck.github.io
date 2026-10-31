@@ -48,7 +48,7 @@ class Scene_Cleanup_Game extends Scene
 
         //Containers
         var randomPreset = Math.random() * 100;
-        var fixHeight = -0.05;
+        var fixHeight = -0.055;
         if(randomPreset > 66)
         {
             this.buttonList.push(this.createQuestionButton("", "Container", 150, 0.7,0.525 - fixHeight, this.onButtonNeedle.bind(this)));
@@ -231,10 +231,13 @@ class Scene_Cleanup_Game extends Scene
     {
         var key = "hard_reset_done";
 
-        if (sessionStorage.getItem(key) !== "1") {
+        if (sessionStorage.getItem(key) !== "1") 
+            {
             sessionStorage.setItem(key, "1");
             window.location.reload();
-        } else {
+        } 
+        else 
+        {
             sessionStorage.removeItem(key);
         }
 
