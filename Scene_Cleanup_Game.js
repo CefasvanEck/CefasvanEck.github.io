@@ -18,6 +18,9 @@ class Scene_Cleanup_Game extends Scene
     dangers_Marked_Count;
     wrong_Marked_Count;
 
+    //Save ID's of Failed or Succesful delivery Icons
+    failOrSuccID_1;
+
     constructor(minTimeWhenShown, maxTimeWhenShown, background_img, fromButton)
     {
         super(minTimeWhenShown, maxTimeWhenShown, background_img);
@@ -30,15 +33,22 @@ class Scene_Cleanup_Game extends Scene
         this.button_info = button;
         //End
 
-        var fixHeight = -0.05;
-        
-
         this.game_Intro = loadSound('Afval.mp3');
         this.playIntroSound = false;
 
+        this.addObject_HalfScale("todo_popup", [0.45, 0.05], 0.2);
+        this.addObject_HalfScale("todo_popup", [0.5, 0.05], 0.2);
+        //End
+
+        this.failOrSuccID_1 = this.img_object.length;
+        this.addObject_HalfScale("check_popup", [0.5, 0.05], 0.2);
+        this.img_shouldRender[this.failOrSuccID_1] = 1;
+            
+
+
         //Containers
         var randomPreset = Math.random() * 100;
-
+        var fixHeight = -0.05;
         if(randomPreset > 66)
         {
             this.buttonList.push(this.createQuestionButton("", "Container", 150, 0.7,0.525 - fixHeight, this.onButtonNeedle.bind(this)));
@@ -54,26 +64,9 @@ class Scene_Cleanup_Game extends Scene
         else
         {
             this.buttonList.push(this.createQuestionButton("", "Bag_Danger", 150, 0.7,0.525 - fixHeight, this.onButtonDangerNeedleBag.bind(this)));
-            this.buttonList.push(this.createQuestionButton("", "Container_2", 100, 0.35,0.55 - fixHeight, this.onButtonDangerAmalgaamContainer.bind(this)));
+            this.buttonList.push(this.createQuestionButton("", "Container_2", 100, 0.35,0.55 - fixHeight, this.onButtonAmalgaamContainer.bind(this)));
             this.buttonList.push(this.createQuestionButton("", "Amalgaam_Filter", 110, 0.45,0.55 - fixHeight, this.onButtonAmalgaamFilter.bind(this)));
         }
-
-        this.failOrSuccID_1 = this.img_object.length;
-        this.addObject_HalfScale("check_popup", [0.45, 0.05], 0.2);
-        this.img_shouldRender[this.failOrSuccID_1] = 1;
-
-        this.failOrSuccID_2 = this.img_object.length;
-        this.addObject_HalfScale("check_popup", [0.5, 0.05], 0.2);
-        this.img_shouldRender[this.failOrSuccID_2] = 1;
-
-        this.failOrSuccID_3 = this.img_object.length;
-        this.addObject_HalfScale("check_popup", [0.55, 0.05], 0.2);
-        this.img_shouldRender[this.failOrSuccID_3] = 1;
-
-        this.addObject_HalfScale("todo_popup", [0.45, 0.05], 0.2);
-        this.addObject_HalfScale("todo_popup", [0.5, 0.05], 0.2);
-        this.addObject_HalfScale("todo_popup", [0.55, 0.05], 0.2);
-
 
         this.button_Contact = createButton("Mijn vraag staat er niet tussen.");
         this.button_Contact.mousePressed(this.onButtonClickContact.bind(this));
@@ -130,7 +123,6 @@ class Scene_Cleanup_Game extends Scene
         textElement.style.pointerEvents = "none";
 
         button.elt.appendChild(textElement);
-
         button.hide();
 
         return button;
@@ -193,63 +185,45 @@ class Scene_Cleanup_Game extends Scene
     onButtonDangerMarked(button) 
     {
         this.addFailedDelivery();
-        //button.attribute("disabled", "");
-
         this.button_info.html("Haal Millieu-box op");
     }
 
     onButtonDangerNeedleBag(button) 
     {
         this.addFailedDelivery();
-        //button.attribute("disabled", "");
-
         this.button_info.html("  De mensen van DRS komen dit helaas wel <br> vaker tegen.   <br> Op de website kunt u grotere naalden  <br>  containers bestellen of een ander aantal. <br> Houd er wel rekening mee dat de <br> meeste contracten maar 2  <br> bezorgmomenten hebben per jaar.");
     }
 
     onButtonDangerAmalgaamContainer(button) 
     {
         this.addFailedDelivery();
-        //button.attribute("disabled", "");
+        this.button_info.html("  Dit potje is bedoelt voor het opbergen  <br> van het afvalwater van de afscheider.  <br> Helaas komt het nog wel eens voor dat  <br> emmertjes en andere afval containers <br> zoals deze niet goed dicht zaten en  <br> zijn gaan lekken tijdens het vervoer.");
+    }
 
+    onButtonAmalgaamContainer(button) 
+    {
+        this.addFailedDelivery();
         this.button_info.html("  Dit potje is bedoelt voor het opbergen  <br> van het afvalwater van de afscheider.  <br> Helaas komt het nog wel eens voor dat  <br> emmertjes en andere afval containers <br> zoals deze niet goed dicht zaten en  <br> zijn gaan lekken tijdens het vervoer.");
     }
 
     onButtonAmalgaamFilter(button) 
     {
-        //button.attribute("disabled", "");
-
         this.button_info.html("  De iconische groene afscheider die zich <br> bevint in bijna elke tandarts stoel.  <br> Er zijn ook andere vormen en formaten  <br> te bestellen. Doet doet u door uw <br> contract aan te passen op de DRS website.");
     }
 
     onButtonNeedle(button) 
     {
-        //button.attribute("disabled", "");
-
         this.button_info.html("  De opvallende gele naalden <br> containers van DRS.   <br> Op de website kunt u ze in vele  <br>  formaten bestellen of een ander aantal. <br> Houd er wel rekening mee dat de <br> meeste contracten maar 2  <br> bezorgmomenten hebben per jaar.");
     }
 
-    onButtonWrongMarked(button) 
-    {
-        //button.attribute("disabled", "");
-    }
+    onButtonWrongMarked(button) {}
 
 
     addFailedDelivery()
     {
-        if(this.wrong_Marked_Count == 0 && this.img_shouldRender[this.failOrSuccID_1] > 0)
+        if(this.img_shouldRender[this.failOrSuccID_1] > 0)
         {
             this.img_shouldRender[this.failOrSuccID_1] = 0;
-            ++this.wrong_Marked_Count;
-        }
-        else if(this.wrong_Marked_Count == 1 && this.img_shouldRender[this.failOrSuccID_2] > 0)
-        {
-            this.img_shouldRender[this.failOrSuccID_2] = 0;
-            ++this.wrong_Marked_Count;
-        }
-        else if(this.wrong_Marked_Count == 2 && this.img_shouldRender[this.failOrSuccID_3] > 0)
-        {
-            this.img_shouldRender[this.failOrSuccID_3] = 0;
-            ++this.wrong_Marked_Count;
         }
     }
 
