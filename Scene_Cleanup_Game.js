@@ -30,11 +30,8 @@ class Scene_Cleanup_Game extends Scene
         this.button_info = button;
         //End
 
-        var fixHeight = 0;
-        if(fromButton)
-        {
-            fixHeight = -0.05;
-        }
+        var fixHeight = -0.035;
+        
 
         this.game_Intro = loadSound('Afval.mp3');
         this.playIntroSound = false;
