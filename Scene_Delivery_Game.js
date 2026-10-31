@@ -131,8 +131,8 @@ class Scene_Delivery_Game extends Scene
 
 
         //Spawning Car parts
-        this.addObjectRotation("Car_Wheel",[0.395, 0.9],0.085,0.085);
-	    this.addObjectRotation("Car_Wheel",[0.614, 0.9],0.085,0.085);
+        this.addObjectRotation("Car_Wheel",[0.395 - 0.0125, 0.9],0.085,0.085);
+	    this.addObjectRotation("Car_Wheel",[0.614 + 0.0125, 0.9],0.085,0.085);
 
         this.currentCar = this.img_object.length;
         this.addObject_HalfScale("DRS_Car_Metalchem",[0.503, 0.79],0.7);
