@@ -141,6 +141,25 @@ class Scene
         this.img_ShowBetweenTime.push([0, 0]);
     }
 
+    addObject_Car(object_img, objectPosition, object_scale)
+    {
+        if (object_img.includes("."))
+        {
+            let vid = createVideo(object_img + "mp4");
+            this.img_object.push(vid);
+        }
+        else
+        {
+            this.img_object.push(this.refreshLoadImage(object_img + ".png"));
+        }
+
+        this.img_position.push([objectPosition[0], objectPosition[1]]);
+        this.img_rotation.push(-1);
+        this.img_scale.push(object_scale);
+        this.img_shouldRender.push(0);
+        this.img_ShowBetweenTime.push([0, 0]);
+    }
+
 
     addObject_Timer(object_img, objectPosition, object_scale, object_BetweenTime)
     {
