@@ -47,24 +47,24 @@ class Scene_Cleanup_Game extends Scene
 
         //Containers
         var randomPreset = Math.random() * 100;
-  
+        var fixHeight = -0.095;
         if(randomPreset > 66)
         {
-            this.buttonList.push(this.createQuestionButton("", "Container", 150, 0.7,0.525 + 0.055, this.onButtonNeedle.bind(this)));
-            this.buttonList.push(this.createQuestionButton("", "Container_2_Danger", 100, 0.35,0.55 + 0.055, this.onButtonDangerAmalgaamContainer.bind(this)));
-            this.buttonList.push(this.createQuestionButton("", "Amalgaam_Filter", 110, 0.45,0.55 + 0.055, this.onButtonAmalgaamFilter.bind(this)));
+            this.buttonList.push(this.createQuestionButton("", "Container", 150, 0.7,0.525 - fixHeight, this.onButtonNeedle.bind(this)));
+            this.buttonList.push(this.createQuestionButton("", "Container_2_Danger", 100, 0.35,0.55 - fixHeight, this.onButtonDangerAmalgaamContainer.bind(this)));
+            this.buttonList.push(this.createQuestionButton("", "Amalgaam_Filter", 110, 0.45,0.55 - fixHeight, this.onButtonAmalgaamFilter.bind(this)));
         }
         else if(randomPreset > 33)
         {
-            this.buttonList.push(this.createQuestionButton("", "Container", 150, 0.7,0.525 + 0.055, this.onButtonNeedle.bind(this)));
-            this.buttonList.push(this.createQuestionButton("", "Container_2_Danger", 100, 0.35,0.55 + 0.055, this.onButtonDangerAmalgaamContainer.bind(this)));
-            this.buttonList.push(this.createQuestionButton("", "Amalgaam_Filter", 110, 0.45,0.55 + 0.055, this.onButtonAmalgaamFilter.bind(this)));
+            this.buttonList.push(this.createQuestionButton("", "Container", 150, 0.7,0.525 - fixHeight, this.onButtonNeedle.bind(this)));
+            this.buttonList.push(this.createQuestionButton("", "Container_2_Danger", 100, 0.35,0.55 - fixHeight, this.onButtonDangerAmalgaamContainer.bind(this)));
+            this.buttonList.push(this.createQuestionButton("", "Amalgaam_Filter", 110, 0.45,0.55 - fixHeight, this.onButtonAmalgaamFilter.bind(this)));
         }
         else
         {
-            this.buttonList.push(this.createQuestionButton("", "Bag_Danger", 150, 0.7,0.525 + 0.055, this.onButtonDangerNeedleBag.bind(this)));
-            this.buttonList.push(this.createQuestionButton("", "Container_2", 100, 0.35,0.55 + 0.055, this.onButtonAmalgaamContainer.bind(this)));
-            this.buttonList.push(this.createQuestionButton("", "Amalgaam_Filter", 110, 0.45,0.55 + 0.055, this.onButtonAmalgaamFilter.bind(this)));
+            this.buttonList.push(this.createQuestionButton("", "Bag_Danger", 150, 0.7,0.525 - fixHeight, this.onButtonDangerNeedleBag.bind(this)));
+            this.buttonList.push(this.createQuestionButton("", "Container_2", 100, 0.35,0.55 - fixHeight, this.onButtonAmalgaamContainer.bind(this)));
+            this.buttonList.push(this.createQuestionButton("", "Amalgaam_Filter", 110, 0.45,0.55 - fixHeight, this.onButtonAmalgaamFilter.bind(this)));
         }
 
         this.button_Contact = createButton("Mijn vraag staat er niet tussen.");
@@ -82,7 +82,7 @@ class Scene_Cleanup_Game extends Scene
             "",
             300, 0, 0.03,
             this.onButtonRestartClick.bind(this));
-
+            
         this.buttonList.push(buttonRestart);
     }
 
