@@ -33,6 +33,7 @@ class Scene_Cleanup_Game extends Scene
         this.button_info = button;
         //End
 
+        //Sound introduction for gameplay
         this.game_Intro = loadSound('Afval.mp3');
         this.playIntroSound = false;
 
@@ -43,8 +44,6 @@ class Scene_Cleanup_Game extends Scene
         this.failOrSuccID_1 = this.img_object.length;
         this.addObject_HalfScale("check_popup", [0.5, 0.05], 0.2);
         this.img_shouldRender[this.failOrSuccID_1] = 1;
-            
-
 
         //Containers
         var randomPreset = Math.random() * 100;
@@ -82,8 +81,8 @@ class Scene_Cleanup_Game extends Scene
             "Klik hier om terug te gaan",
             "",
             300, 0, 0.03,
-            this.onButtonRestartClick.bind(this)
-        );
+            this.onButtonRestartClick.bind(this));
+            
         this.buttonList.push(buttonRestart);
     }
 
@@ -113,7 +112,6 @@ class Scene_Cleanup_Game extends Scene
         textElement.style.top = "0";
 
         textElement.style.textAlign = "center";
-
         textElement.style.transform = "translateY(30px)";
 
         textElement.style.whiteSpace = "normal";
@@ -127,7 +125,6 @@ class Scene_Cleanup_Game extends Scene
 
         return button;
     }
-
 
     renderFromTimer(currentTime)
     {
@@ -217,7 +214,6 @@ class Scene_Cleanup_Game extends Scene
     }
 
     onButtonWrongMarked(button) {}
-
 
     addFailedDelivery()
     {
