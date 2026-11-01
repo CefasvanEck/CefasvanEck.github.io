@@ -21,8 +21,8 @@ const Main =
 
 function setup() 
 {
-	Main.widthSize = 1024;
-	Main.heightSize = 682;
+	Main.widthSize = windowWidth;
+    Main.heightSize = windowHeight;
 	createCanvas(Main.widthSize, Main.heightSize);
 	frameRate(20);
 	//End
@@ -109,6 +109,20 @@ function windowResized()
     updateWindowSize();
     resizeCanvas(Main.widthSize, Main.heightSize);
 	redraw();
+
+	Main.widthSize = windowWidth;
+    Main.heightSize = windowHeight;
+
+    resizeCanvas(Main.widthSize, Main.heightSize);
+
+    // Update alle button-posities
+    for (const button of Main.buttonList)
+    {
+        button.position(
+            Main.widthSize * button.positionX,
+            Main.heightSize * button.positionY
+        );
+    }
 }
 
 function updateWindowSize()
