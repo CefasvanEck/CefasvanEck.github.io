@@ -47,7 +47,7 @@ class Scene_Cleanup_Game extends Scene
 
         //Containers
         var randomPreset = Math.random() * 100;
-        var fixHeight = -0.095;
+        var fixHeight = -0.055;
         if(randomPreset > 66)
         {
             this.buttonList.push(this.createQuestionButton("", "Container", 150, 0.7,0.525 - fixHeight, this.onButtonNeedle.bind(this)));
@@ -84,6 +84,41 @@ class Scene_Cleanup_Game extends Scene
             this.onButtonRestartClick.bind(this));
             
         this.buttonList.push(buttonRestart);
+    }
+
+    createQuestionButton_Item(text, texturePath, width, positionX, positionY, buttonFunction)
+    {
+        var button = createButton("");
+
+        if(typeof buttonFunction === "function")
+        {
+            button.mousePressed(() => {
+                buttonFunction(button);
+            });
+        }
+
+        this.setButtonTextureData(button, texturePath);
+
+        button.size(width, width);
+        button.position(Main.widthSize * positionX, Main.heightSize * positionY);
+        
+        // Tekst-element
+        var textElement = document.createElement("span");
+        textElement.innerHTML = text;
+
+
+        textElement.style.textAlign = "center";
+       
+        textElement.style.whiteSpace = "normal";
+        textElement.style.overflowWrap = "break-word";
+
+        // Zorg dat de tekst de muisklik niet opvangt
+        textElement.style.pointerEvents = "none";
+
+        button.elt.appendChild(textElement);
+        button.hide();
+
+        return button;
     }
 
     createQuestionButton(text, texturePath, width, positionX, positionY, buttonFunction)
