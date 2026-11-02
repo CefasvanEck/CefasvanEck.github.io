@@ -7,16 +7,35 @@
 
     <title>DRS Animatie</title>
 
-    <style>
-      html {
-        zoom: reset;
-      }
+    <link rel="stylesheet" href="style.css">
 
-      body {
-        padding: 0;
-        margin: 0;
-        overflow: hidden;
-      }
+    <style>
+
+
+    * {
+    box-sizing: border-box;
+    }
+
+   html {
+      width: 100%;
+      min-height: 100%;
+      zoom: reset;
+   }
+
+  body {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+  }
+  
+  img,
+  video {
+      max-width: 100%;
+      height: auto;
+  }
+      
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
