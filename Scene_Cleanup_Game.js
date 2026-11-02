@@ -105,8 +105,6 @@ class Scene_Cleanup_Game extends Scene
         // Tekst-element
         var textElement = document.createElement("span");
         textElement.innerHTML = text;
-
-
         textElement.style.textAlign = "center";
        
         textElement.style.whiteSpace = "normal";

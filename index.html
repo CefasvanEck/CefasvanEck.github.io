@@ -34,32 +34,16 @@
     <script src="Scene_Office.js"></script>
     <script src="Main.js"></script>
     <script src="Scene_Delivery_Game.js"></script>
-        <script src="Scene_Cleanup_Game.js"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
+    <script src="Scene_Cleanup_Game.js"></script>
     <script>
-    (function() 
-    {
-      emailjs.init("wID-IoeiMMBS4j4Px");
-    })();
-
-    //Contact Us: {{Grad-Project-Data}}
-    function sendMail(data) 
-    {
-      emailjs.send("service_ledsftk", "template_kt0ly73", 
-      {
-        message: "Started video: " + data
-      }).then(function(response) 
-      {
-        console.log("SUCCESS!", response.status, response.text);
-      }, function(error) 
-      {
-        console.log("FAILED...", error);
-      });
-    }
+    document.querySelectorAll("video").forEach(video => {
+        video.addEventListener("ended", function() {
+            video.pause();
+            video.currentTime = 0;
+            video.style.display = "none";
+        });
+    });
     </script>
-
   </head>
 
   <body>
