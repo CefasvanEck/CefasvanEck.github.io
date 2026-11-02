@@ -484,7 +484,7 @@ class Scene_Delivery_Game extends Scene
         //Cannot deliver a Climate Box when your task is to collect it, results in quest failed
         if(this.questType == 0 && this.spawnedBoxDelay_GPE > 0 && this.questFailTimer_GPE == 0)
         {
-            addFailedDelivery();
+            this.addFailedDelivery();
             this.questFailTimer_GPE = 15;
         }
         else if(this.questFailTimer_GPE == 0)
