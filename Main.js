@@ -16,6 +16,7 @@ const Main =
 	//Window Size
 	widthSize: 0,
 	heightSize: 0,
+	buttonList: [],
 	scenes: [],
 };
 

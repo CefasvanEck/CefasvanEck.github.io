@@ -154,7 +154,7 @@ class Scene
         }
 
         this.img_position.push([objectPosition[0], objectPosition[1]]);
-        this.img_rotation.push(-1);
+        this.img_rotation.push(-5);
         this.img_scale.push(object_scale);
         this.img_shouldRender.push(0);
         this.img_ShowBetweenTime.push([0, 0]);
@@ -281,7 +281,7 @@ class Scene
             }
             else
             {
-                if (this.img_rotation[i] > 0)
+                if (this.img_rotation[i] > 0 || this.img_rotation[i] == -5)
                 {
                     const scaleFactor = Math.min(width / Main.widthSize, height / Main.heightSize);
 
@@ -290,18 +290,18 @@ class Scene
                     scale(scaleFactor);
 
                     translate(Main.widthSize * this.img_position[i][0], Main.heightSize * this.img_position[i][1]);
-                    rotate(this.img_rotation[i]);
+                    if (this.img_rotation[i] > 0)
+                    {
+                        rotate(this.img_rotation[i]);
+                        this.img_rotation[i] -= 0.15;
+                        if (this.img_rotation[i] < 0)
+                        {
+                            this.img_rotation[i] = 360 - 0.15;
+                        }
+                    }
 
                     image(this.img_object[i], 0, 0, Main.widthSize * this.img_scale[i], Main.widthSize * this.img_scale[i]);
-
                     pop();
-
-                    this.img_rotation[i] -= 0.15;
-
-                    if (this.img_rotation[i] < 0)
-                    {
-                        this.img_rotation[i] = 360 - 0.15;
-                    }
                 }
                 else if(this.img_rotation[i] < 0)
                 {
